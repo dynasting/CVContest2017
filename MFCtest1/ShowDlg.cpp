@@ -153,7 +153,8 @@ void CShowDlg::OnBnClickedRecBeginButton()
 	//m_edit2S = pDlg1->m_editLDX;
 
 	//m_edit2S = editLUX;
-	//m_edit2TH = 100;
+	m_edit2TH = 100;
+	//to do
 	UpdateData(FALSE);
 }
 

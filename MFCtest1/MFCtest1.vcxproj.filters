@@ -50,6 +50,9 @@
     <ClCompile Include="ShowDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\opencv_test_2.4.11\contest_2.4.13.2\first_match.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MFCtest1.rc">
