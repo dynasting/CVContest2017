@@ -198,13 +198,13 @@ input 数组指针 rawResult[5]
 output 目标个数
 */
 
-vector <rawResult> recognize(){
+vector <rawResult> recognize(Mat& img_scene){
 	vector <rawResult> result;
 
-	Mat img_scene = imread("C:\\Users\\姚乐宇\\Desktop\\test3.jpg");
+	//Mat img_scene = imread("C:\\Users\\姚乐宇\\Desktop\\test3.jpg");
 	//Mat img_scene = imread("D:\\资料\\yly\\myProject\\opencv_test_2.4.11\\test_project_2.4.13.2\\basic-shapes-2.png");
 	
-
+	
 
 
 

@@ -16,7 +16,7 @@
 //#include "first_match.cpp"
 
 //ROI set start point inside the calibration rectangle
-#define OFFSET 0
+#define OFFSET 5
 #define PI 3.1415
 
 using namespace cv;
@@ -132,11 +132,11 @@ int getColor(const Mat& input, int x, int y);
 /*
 input 数组指针 rawResult[5]
 input Mat
-照片需要从本地读取
+
 @@@ ROI set finished
 output 目标个数
 */
-vector <rawResult> recognize();
+vector <rawResult> recognize(Mat& img_scene);
 
 
 

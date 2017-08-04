@@ -161,14 +161,40 @@ void CShowDlg::OnBnClickedRecBeginButton()
 
 	//识别程序从这里开始
 
+
+	//标定数据需要传过来
+	//这些数据是为了通过编译用的 应来源于标定
+	calibrationInfo cali;
+	cali.lenth = 400;
+	cali.width = 400;
+	cali.physicalLenth = 72;
+	cali.physicalWidth = 72;
+
+
 	//用于识别的图像
 	Mat color_denoised = imread("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize", 1);
 
 	//ROI set
 	//向内挖去5像素
-	Mat image_ROI = color_denoised.clone();
+	//参见first_match.h 中 OFFSET=5
+	
+	Rect region_of_interest = Rect(OFFSET, OFFSET, color_denoised.cols, color_denoised.rows);
+	Mat image_roi = color_denoised(region_of_interest);
 
 
+	vector <rawResult> rawresults;
+	rawresults = recognize(image_roi);
+
+	//完成识别  进行比例运算
+	vector <finalResult> finalresults;
+	for (size_t i = 0; i < rawresults.size(); i++) {
+		finalresults.push_back(rawresultToFinalResult(rawresults[i], cali));
+
+	}
+
+
+	//将使用一些效率较低的方式完成数据输出
+	//或改变相关定义优化
 
 
 	//to do
