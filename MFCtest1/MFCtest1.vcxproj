@@ -199,6 +199,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="first_match.h" />
     <ClInclude Include="MFCtest1.h" />
     <ClInclude Include="MFCtest1Dlg.h" />
     <ClInclude Include="Resource.h" />
@@ -207,11 +208,9 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\opencv_test_2.4.11\contest_2.4.13.2\first_match.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    <ClCompile Include="first_match.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="MFCtest1.cpp" />
     <ClCompile Include="MFCtest1Dlg.cpp" />
