@@ -170,6 +170,7 @@ void CShowDlg::OnBnClickedRecBeginButton()
 
 
 
+
 	//to do
 	UpdateData(FALSE);
 }
