@@ -165,7 +165,7 @@ void CShowDlg::OnBnClickedRecBeginButton()
 	Mat color_denoised = imread("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize", 1);
 
 	//ROI set
-
+	//即将进行
 
 
 
