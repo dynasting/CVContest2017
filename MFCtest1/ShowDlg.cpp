@@ -7,6 +7,8 @@
 #include "afxdialogex.h"
 #include "MFCtest1Dlg.h"
 
+#include "first_match.h"
+
 // CShowDlg 对话框
 
 IMPLEMENT_DYNAMIC(CShowDlg, CDialogEx)
@@ -154,6 +156,20 @@ void CShowDlg::OnBnClickedRecBeginButton()
 
 	//m_edit2S = editLUX;
 	m_edit2TH = 100;
+
+
+
+	//识别程序从这里开始
+
+	//用于识别的图像
+	Mat color_denoised = imread("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize", 1);
+
+	//ROI set
+
+
+
+
+
 	//to do
 	UpdateData(FALSE);
 }
