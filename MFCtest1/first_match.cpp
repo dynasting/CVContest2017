@@ -63,6 +63,13 @@ double getDistanceOfTwoCVPoints(Point p1, Point p2) {
 
 
 
+
+
+calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, double physicalheight, Mat & color)
+{
+	return calibrationInfo();
+}
+
 /*
 convert function
 input in ROI result
@@ -73,8 +80,7 @@ finalResult rawresultToFinalResult(rawResult raw, calibrationInfo info) {
 
 	//coefficient
 	double coefficient;
-	coefficient = getArea(info.xBottomLeft, info.yBottomLeft, info.xBottomRight, info.yBottomRight,
-		info.xTopLeft, info.yTopLeft, info.xTopRight, info.yTopRight) / (info.physicalLenth * info.physicalWidth);
+	coefficient = info.lenth * info.width / (info.physicalLenth * info.physicalWidth);
 
 	finalResult result;
 	result.angle = (int) raw.angle;

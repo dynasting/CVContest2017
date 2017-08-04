@@ -82,15 +82,28 @@ struct calibrationInfo
 {
 	double physicalLenth;
 	double physicalWidth;
-	int xTopLeft;
-	int yTopLeft;
-	int xTopRight;
-	int yTopRight;
-	int xBottomLeft;
-	int yBottomLeft;
-	int xBottomRight;
-	int yBottomRight;
+	int lenth;
+	int width;
+	
 };
+
+
+
+//初次标定
+//color 为降噪后的彩色图
+//两个double来自标定数据
+//点的vector来自标定
+//输出结构体 带physical的为实际测量的数据
+//不带的为输出图片的长宽
+//输出的结果imwrite()
+//传入的点的顺序应该是，左上，右上，左下，右下
+//扭的时候我是映射所以用前三个，算面积用四个
+//然后，如果觉得效果不好。。可以考虑换个变换用那个需要四个点的。。
+calibrationInfo AffineTrans(vector <Point2f> scrPoints, double physicalwidth, double physicalheight,Mat& color);
+
+//图片降噪
+
+
 
 /*
 convert function
@@ -115,6 +128,15 @@ output int colorID
 */
 int getColor(const Mat& input, int x, int y);
 
+
+/*
+input 数组指针 rawResult[5]
+input Mat
+照片需要从本地读取
+@@@ ROI set finished
+output 目标个数
+*/
+vector <rawResult> recognize();
 
 
 
