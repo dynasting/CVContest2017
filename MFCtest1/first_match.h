@@ -140,6 +140,13 @@ vector <rawResult> recognize();
 
 
 
+/*
+≈ƒ’’
+Ωµ‘Î
+*/
+Mat denoised();
+
+
 #endif // ! FIRST_MATCH_H
 
 #ifndef MIN

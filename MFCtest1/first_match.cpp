@@ -65,10 +65,37 @@ double getDistanceOfTwoCVPoints(Point p1, Point p2) {
 
 
 
-calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, double physicalheight, Mat & color)
+
+calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, double physicalheight, Mat &color)
 {
-	return calibrationInfo();
+	Mat dst;
+	calibrationInfo afterTrans;
+	double area = 0.5*(scrPoints[0].x*scrPoints[1].y - scrPoints[1].x*scrPoints[0].y
+		+ scrPoints[1].x*scrPoints[2].y - scrPoints[2].x*scrPoints[1].y
+		+ scrPoints[2].x*scrPoints[3].y - scrPoints[3].x*scrPoints[2].y
+		+ scrPoints[3].x*scrPoints[0].y - scrPoints[0].x*scrPoints[3].y);
+	Point2f dstPoints[3];
+	dstPoints[0].x = 0;
+	dstPoints[0].y = 0;
+	dstPoints[1].y = 0;
+	dstPoints[2].x = 0;
+	//设宽physicalwidth*k,高physicalheight*k，根据面积不变计算出k，随后计算出宽高
+	double k = sqrt(area / (physicalwidth*physicalheight));
+	dstPoints[1].x = physicalwidth*k;
+	dstPoints[2].y = physicalheight*k;
+	Point2f scrPointsa[4] = { scrPoints[0],scrPoints[1],scrPoints[2],scrPoints[3] };
+	Mat Trans = getAffineTransform(scrPointsa, dstPoints);
+	warpAffine(color, dst, Trans, Size(color.cols, color.rows), CV_INTER_CUBIC);
+
+	cv::imwrite("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize", dst);
+
+	afterTrans.physicalLenth = physicalheight;
+	afterTrans.physicalWidth = physicalwidth;
+	afterTrans.lenth = dstPoints[1].x;
+	afterTrans.width = dstPoints[2].y;
+	return afterTrans;
 }
+
 
 /*
 convert function
@@ -374,6 +401,31 @@ vector <rawResult> recognize(){
 	}
 
 	return result;
+}
+
+Mat denoised()
+{
+	const int N = 14;
+	VideoCapture capture(0);
+	int delay = 1000 / 30;
+
+	cv::Mat avrg_img;
+
+	for (int i = 0; i < N; i++) {
+		Mat frame;
+		capture >> frame;
+		// convert to double
+		frame.convertTo(frame, CV_32F, 1.0 / 255.0);
+		if (i == 0) {
+			avrg_img = frame / N;
+		}
+		else
+			avrg_img += frame / N;
+	}
+	
+	avrg_img.convertTo(avrg_img, CV_8UC3, 255.0);
+	//cv::imwrite("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\denoised.jpg", avrg_img);
+	return avrg_img;
 }
 
 
