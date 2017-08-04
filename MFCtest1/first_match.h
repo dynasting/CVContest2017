@@ -11,6 +11,8 @@
 #include "opencv2/nonfree/features2d.hpp"
 #include <opencv2/opencv.hpp>  
 #include <opencv2/imgproc/imgproc.hpp>
+#include <vector>
+
 //#include "first_match.cpp"
 
 //ROI set start point inside the calibration rectangle

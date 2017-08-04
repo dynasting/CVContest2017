@@ -11,6 +11,7 @@ http://blog.sina.com.cn/s/blog_58649eb30100th2k.html
 #include "opencv2/nonfree/features2d.hpp"
 #include <opencv2/opencv.hpp>  
 #include <opencv2/imgproc/imgproc.hpp>
+#include <vector>
 
 #include "first_match.h"
 
@@ -156,27 +157,17 @@ int getColor(const Mat& input, int x, int y) {
 /*
 input 数组指针 rawResult[5]
 	  input Mat
+	  照片需要从本地读取
 	  @@@ ROI set finished
 output 目标个数
 */
-int main() {
-	
-	int numOfTargets = 0;
+
+vector <rawResult> recognize(){
+	vector <rawResult> result;
+
 	Mat img_scene = imread("C:\\Users\\姚乐宇\\Desktop\\test3.jpg");
 	//Mat img_scene = imread("D:\\资料\\yly\\myProject\\opencv_test_2.4.11\\test_project_2.4.13.2\\basic-shapes-2.png");
-	rawResult results[12];
-	calibrationInfo cali;
-	cali.physicalLenth = 320;
-	cali.physicalWidth = 320;
-	cali.xBottomLeft = 0;
-	cali.xBottomRight = 320;
-	cali.xTopLeft = 0;
-	cali.xTopRight = 320;
-
-	cali.yBottomLeft = 320;
-	cali.yBottomRight = 320;
-	cali.yTopLeft = 0;
-	cali.yTopRight = 0;
+	
 
 
 
@@ -245,6 +236,9 @@ int main() {
 
 				//确认为矩形
 				//下面进行计算
+
+				rawResult singleResult;
+
 				double height, width;
 				double L1, L2, L3, L0;
 				L0 = getDistanceOfTwoCVPoints(approx[0], approx[1]);
@@ -255,7 +249,7 @@ int main() {
 				height = sqrt(L0 * L2);
 				width = sqrt(L1 * L3);
 
-				results[numOfTargets].area = height * width;
+				singleResult.area = height * width;
 
 
 				//确认长短轴
@@ -278,25 +272,25 @@ int main() {
 				}
 
 				//输出角度
-				results[numOfTargets].angle=atan2((p1.y-p2.y),(p1.x-p2.x)) * 180 / PI;
+				singleResult.angle=atan2((p1.y-p2.y),(p1.x-p2.x)) * 180 / PI;
 
 				//输出centre
-				results[numOfTargets].centreX = (approx[0].x+ approx[1].x+ approx[2].x+ approx[3].x) / 4;
-				results[numOfTargets].centreY = (approx[0].y + approx[1].y + approx[2].y + approx[3].y) / 4;
+				singleResult.centreX = (approx[0].x+ approx[1].x+ approx[2].x+ approx[3].x) / 4;
+				singleResult.centreY = (approx[0].y + approx[1].y + approx[2].y + approx[3].y) / 4;
 
 
 				//形状ID
-				if (minor / major < 0.85) results[numOfTargets].shapeID = 3;
-				else results[numOfTargets].shapeID = 2;
+				if (minor / major < 0.85) singleResult.shapeID = 3;
+				else singleResult.shapeID = 2;
 
-				results[numOfTargets].ifShape = true;
+				singleResult.ifShape = true;
 
-				results[numOfTargets].colorID = getColor(img_scene, results[numOfTargets].centreX, results[numOfTargets].centreY);
+				singleResult.colorID = getColor(img_scene, singleResult.centreX, singleResult.centreY);
 
-				results[numOfTargets].shapeComleteID = 10 * results[numOfTargets].colorID + results[numOfTargets].shapeID;
+				singleResult.shapeComleteID = 10 * singleResult.colorID + singleResult.shapeID;
 
-				//更新目标数量
-				numOfTargets++;
+				result.push_back(singleResult);
+
 			}
 
 			/*
@@ -324,7 +318,7 @@ int main() {
 
 			//确认为椭圆
 			//开始处理
-
+			rawResult singleResult;
 
 			double major, minor;
 			major = MAX(box.size.width, box.size.height);
@@ -332,23 +326,23 @@ int main() {
 
 
 			//centre
-			results[numOfTargets].centreX = box.center.x;
-			results[numOfTargets].centreY = box.center.y;
+			singleResult.centreX = box.center.x;
+			singleResult.centreY = box.center.y;
 
 
 			//angle 
-			results[numOfTargets].angle = box.angle - (double) 180;
-			results[numOfTargets].colorID = getColor(img_scene, results[numOfTargets].centreX, results[numOfTargets].centreY);
+			singleResult.angle = box.angle - (double) 180;
+			singleResult.colorID = getColor(img_scene, singleResult.centreX, singleResult.centreY);
 
 			//形状ID
-			if (minor / major < 0.85) results[numOfTargets].shapeID = 4;
-			else results[numOfTargets].shapeID = 1;
+			if (minor / major < 0.85) singleResult.shapeID = 4;
+			else singleResult.shapeID = 1;
 
-			results[numOfTargets].shapeComleteID = 10 * results[numOfTargets].colorID + results[numOfTargets].shapeID;
+			singleResult.shapeComleteID = 10 * singleResult.colorID + singleResult.shapeID;
 
-			results[numOfTargets].ifShape = true;
+			singleResult.ifShape = true;
 			//ares
-			results[numOfTargets].area =(double)  (box.size.area() * PI / 4);
+			singleResult.area =(double)  (box.size.area() * PI / 4);
 		//	待完成
 			//results[numOfTargets].centreX=(int) ((r.br+++)/4)
 
@@ -368,172 +362,12 @@ int main() {
 
 			*/
 			//更新目标数量
-			numOfTargets++;
-		}
-	}
-	for (int i = 0; i < numOfTargets; i++) {
-		cout << results[i].shapeComleteID <<" "<< results[i].centreX << " " << results[i].centreY << endl;
-	}
-	return 0;
-}
+			result.push_back(singleResult);
 
-
-
-
-
-
-
-/**
-* @num 0=tin 1=noodle 2=gum 3=popcan(hard)
-* @逐一对比
-@objID	 可乐 口香糖 方便面 饼干 81 82 83 84
-* @return area in int
-*/
-int object_recognization_single(int object_num, Mat& img_scene)
-{
-
-	std::string filename[4] = { "D:\\资料\\yly\\myProject\\opencv_test_2.4.11\\Release\\tin.jpg" ,
-		"D:\\资料\\yly\\myProject\\opencv_test_2.4.11\\Release\\noodles.JPG" ,
-		"D:\\资料\\yly\\myProject\\opencv_test_2.4.11\\Release\\gum.jpg" ,
-		"D:\\资料\\yly\\myProject\\opencv_test_2.4.11\\Release\\popcan.jpg" };
-	Mat img_object = imread(filename[object_num], CV_LOAD_IMAGE_GRAYSCALE);
-	//Mat img_scene = imread("D:\\资料\\yly\\myProject\\opencv_test_2.4.11\\Release\\stuff.jpg", CV_LOAD_IMAGE_GRAYSCALE);
-
-	//int blockSize = 25;
-	//int constValue = 10;
-	//cv::Mat local;
-	//cv::adaptiveThreshold(img_object0, img_object, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, blockSize, constValue);
-	//cv::adaptiveThreshold(img_scene0, img_scene, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, blockSize, constValue);
-
-	//-- Step 1: Detect the keypoints using SURF Detector
-	int minHessian = 350;
-
-	SurfFeatureDetector detector(minHessian);
-
-	std::vector<KeyPoint> keypoints_object, keypoints_scene;
-
-	detector.detect(img_object, keypoints_object);
-	detector.detect(img_scene, keypoints_scene);
-
-	//-- Step 2: Calculate descriptors (feature vectors)
-	SurfDescriptorExtractor extractor;
-
-	Mat descriptors_object, descriptors_scene;
-
-	extractor.compute(img_object, keypoints_object, descriptors_object);
-	extractor.compute(img_scene, keypoints_scene, descriptors_scene);
-
-	//-- Step 3: Matching descriptor vectors using FLANN matcher
-	FlannBasedMatcher matcher;
-	std::vector< DMatch > matches;
-	matcher.match(descriptors_object, descriptors_scene, matches);
-
-	double max_dist = 0; double min_dist = 100;
-
-	//-- Quick calculation of max and min distances between keypoints
-	for (int i = 0; i < descriptors_object.rows; i++)
-	{
-		double dist = matches[i].distance;
-		if (dist < min_dist) min_dist = dist;
-		if (dist > max_dist) max_dist = dist;
-	}
-
-	//printf("-- Max dist : %f \n", max_dist);
-	//printf("-- Min dist : %f \n", min_dist);
-
-	//-- Draw only "good" matches (i.e. whose distance is less than 3*min_dist )
-	std::vector< DMatch > good_matches;
-
-	for (int i = 0; i < descriptors_object.rows; i++)
-	{
-		if (matches[i].distance < 4 * min_dist)
-		{
-			good_matches.push_back(matches[i]);
 		}
 	}
 
-	Mat img_matches;
-	drawMatches(img_object, keypoints_object, img_scene, keypoints_scene,
-		good_matches, img_matches, Scalar::all(-1), Scalar::all(-1),
-		vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
-
-
-	//-- Localize the object from img_1 in img_2
-	std::vector<Point2f> obj;
-	std::vector<Point2f> scene;
-
-	for (size_t i = 0; i < good_matches.size(); i++)
-	{
-		//-- Get the keypoints from the good matches
-		obj.push_back(keypoints_object[good_matches[i].queryIdx].pt);
-		scene.push_back(keypoints_scene[good_matches[i].trainIdx].pt);
-	}
-
-	Mat H = findHomography(obj, scene, CV_RANSAC);
-
-	//-- Get the corners from the image_1 ( the object to be "detected" )
-	std::vector<Point2f> obj_corners(4);
-	obj_corners[0] = Point(0, 0); obj_corners[1] = Point(img_object.cols, 0);
-	obj_corners[2] = Point(img_object.cols, img_object.rows); obj_corners[3] = Point(0, img_object.rows);
-	std::vector<Point2f> scene_corners(4);
-
-	perspectiveTransform(obj_corners, scene_corners, H);
-
-
-	//-- Draw lines between the corners (the mapped object in the scene - image_2 )
-	//	Point2f offset((float)img_object.cols, 0);
-	//line(img_matches, scene_corners[0] + offset, scene_corners[1] + offset, Scalar(0, 255, 0), 4);
-	//line(img_matches, scene_corners[1] + offset, scene_corners[2] + offset, Scalar(0, 255, 0), 4);
-	//line(img_matches, scene_corners[2] + offset, scene_corners[3] + offset, Scalar(0, 255, 0), 4);
-	//line(img_matches, scene_corners[3] + offset, scene_corners[0] + offset, Scalar(0, 255, 0), 4);
-
-	//-- Show detected matches
-	//imshow("Good Matches & Object detection", img_matches);
-
-	int area0;
-	area0 = 0.5 * (scene_corners[0].x * scene_corners[1].y
-		- scene_corners[1].x * scene_corners[0].y
-		+ scene_corners[1].x * scene_corners[2].y
-		- scene_corners[2].x * scene_corners[1].y
-		+ scene_corners[2].x * scene_corners[3].y
-		- scene_corners[3].x * scene_corners[2].y
-		+ scene_corners[3].x * scene_corners[0].y
-		- scene_corners[0].x * scene_corners[3].y);
-	std::cout << area0 << std::endl;
-	std::cout << "area finished" << endl;
-
-	//other calculations
-	return area0;
-
-
+	return result;
 }
 
-/**
-* @收到图片后对比
-* @brief Main function
-* @num 0=tin 1=noodle 2=gum 3=popcan(hard)
-*/
-int object_recognization_single_mode(Mat& img_scene) {
-
-	int area[4];
-	for (int i = 0; i < 4; i++) {
-		area[i] = object_recognization_single(i, img_scene);
-	}
-
-	int max_index = 0;
-	int max_area = 0;
-	for (int i = 0; i < 4; i++) {
-		if (area[i] >= max_area) {
-			max_index = i;
-			max_area = area[i];
-		}
-
-	}
-
-
-	//other output
-	std::cout << max_index << std::endl;
-	return max_index;
-
-}
 
