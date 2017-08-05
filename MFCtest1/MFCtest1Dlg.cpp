@@ -1,5 +1,5 @@
-
-// MFCtest1Dlg.cpp : ÊµÏÖÎÄ¼ş
+ï»¿
+// MFCtest1Dlg.cpp : å®ç°æ–‡ä»¶
 //
 
 #include "stdafx.h"
@@ -17,22 +17,22 @@ CDC *pDC;
 HDC hDC;
 CWnd *pwnd;
 
-// ÓÃÓÚÓ¦ÓÃ³ÌĞò¡°¹ØÓÚ¡±²Ëµ¥ÏîµÄ CAboutDlg ¶Ô»°¿ò
+// ç”¨äºåº”ç”¨ç¨‹åºâ€œå…³äºâ€èœå•é¡¹çš„ CAboutDlg å¯¹è¯æ¡†
 
 class CAboutDlg : public CDialogEx
 {
 public:
 	CAboutDlg();
 
-// ¶Ô»°¿òÊı¾İ
+// å¯¹è¯æ¡†æ•°æ®
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_ABOUTBOX };
 #endif
 
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV æ”¯æŒ
 
-// ÊµÏÖ
+// å®ç°
 protected:
 	DECLARE_MESSAGE_MAP()
 };
@@ -50,7 +50,7 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CMFCtest1Dlg ¶Ô»°¿ò
+// CMFCtest1Dlg å¯¹è¯æ¡†
 
 
 
@@ -101,15 +101,15 @@ BEGIN_MESSAGE_MAP(CMFCtest1Dlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CMFCtest1Dlg ÏûÏ¢´¦Àí³ÌĞò
+// CMFCtest1Dlg æ¶ˆæ¯å¤„ç†ç¨‹åº
 
 BOOL CMFCtest1Dlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	// ½«¡°¹ØÓÚ...¡±²Ëµ¥ÏîÌí¼Óµ½ÏµÍ³²Ëµ¥ÖĞ¡£
+	// å°†â€œå…³äº...â€èœå•é¡¹æ·»åŠ åˆ°ç³»ç»Ÿèœå•ä¸­ã€‚
 
-	// IDM_ABOUTBOX ±ØĞëÔÚÏµÍ³ÃüÁî·¶Î§ÄÚ¡£
+	// IDM_ABOUTBOX å¿…é¡»åœ¨ç³»ç»Ÿå‘½ä»¤èŒƒå›´å†…ã€‚
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
@@ -127,21 +127,25 @@ BOOL CMFCtest1Dlg::OnInitDialog()
 		}
 	}
 
-	// ÉèÖÃ´Ë¶Ô»°¿òµÄÍ¼±ê¡£  µ±Ó¦ÓÃ³ÌĞòÖ÷´°¿Ú²»ÊÇ¶Ô»°¿òÊ±£¬¿ò¼Ü½«×Ô¶¯
-	//  Ö´ĞĞ´Ë²Ù×÷
-	SetIcon(m_hIcon, TRUE);			// ÉèÖÃ´óÍ¼±ê
-	SetIcon(m_hIcon, FALSE);		// ÉèÖÃĞ¡Í¼±ê
+	// è®¾ç½®æ­¤å¯¹è¯æ¡†çš„å›¾æ ‡ã€‚  å½“åº”ç”¨ç¨‹åºä¸»çª—å£ä¸æ˜¯å¯¹è¯æ¡†æ—¶ï¼Œæ¡†æ¶å°†è‡ªåŠ¨
+	//  æ‰§è¡Œæ­¤æ“ä½œ
+	SetIcon(m_hIcon, TRUE);			// è®¾ç½®å¤§å›¾æ ‡
+	SetIcon(m_hIcon, FALSE);		// è®¾ç½®å°å›¾æ ‡
 
-	// TODO: ÔÚ´ËÌí¼Ó¶îÍâµÄ³õÊ¼»¯´úÂë
+<<<<<<< HEAD
+	// TODO: ï¿½Ú´ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½Ä³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	pwnd = GetDlgItem(IDC_VIDEO);
 	//pwnd->MoveWindow(35,30,352,288);??
 	pDC = pwnd->GetDC();
 	//pDC?=GetDC();??
 	hDC = pDC->GetSafeHdc();
 	pwnd->GetClientRect(&rect);
-	return TRUE;  // ³ı·Ç½«½¹µãÉèÖÃµ½¿Ø¼ş£¬·ñÔò·µ»Ø TRUE
+	return TRUE;  // ï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½ TRUE
+=======
+	// TODO: åœ¨æ­¤æ·»åŠ é¢å¤–çš„åˆå§‹åŒ–ä»£ç 
+>>>>>>> åŠ å…¥å…¨å±€å˜é‡
 
-	return TRUE;  // ³ı·Ç½«½¹µãÉèÖÃµ½¿Ø¼ş£¬·ñÔò·µ»Ø TRUE
+	return TRUE;  // é™¤éå°†ç„¦ç‚¹è®¾ç½®åˆ°æ§ä»¶ï¼Œå¦åˆ™è¿”å› TRUE
 }
 
 void CMFCtest1Dlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -157,19 +161,19 @@ void CMFCtest1Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 }
 
-// Èç¹ûÏò¶Ô»°¿òÌí¼Ó×îĞ¡»¯°´Å¥£¬ÔòĞèÒªÏÂÃæµÄ´úÂë
-//  À´»æÖÆ¸ÃÍ¼±ê¡£  ¶ÔÓÚÊ¹ÓÃÎÄµµ/ÊÓÍ¼Ä£ĞÍµÄ MFC Ó¦ÓÃ³ÌĞò£¬
-//  Õâ½«ÓÉ¿ò¼Ü×Ô¶¯Íê³É¡£
+// å¦‚æœå‘å¯¹è¯æ¡†æ·»åŠ æœ€å°åŒ–æŒ‰é’®ï¼Œåˆ™éœ€è¦ä¸‹é¢çš„ä»£ç 
+//  æ¥ç»˜åˆ¶è¯¥å›¾æ ‡ã€‚  å¯¹äºä½¿ç”¨æ–‡æ¡£/è§†å›¾æ¨¡å‹çš„ MFC åº”ç”¨ç¨‹åºï¼Œ
+//  è¿™å°†ç”±æ¡†æ¶è‡ªåŠ¨å®Œæˆã€‚
 
 void CMFCtest1Dlg::OnPaint()
 {
 	if (IsIconic())
 	{
-		CPaintDC dc(this); // ÓÃÓÚ»æÖÆµÄÉè±¸ÉÏÏÂÎÄ
+		CPaintDC dc(this); // ç”¨äºç»˜åˆ¶çš„è®¾å¤‡ä¸Šä¸‹æ–‡
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-		// Ê¹Í¼±êÔÚ¹¤×÷Çø¾ØĞÎÖĞ¾ÓÖĞ
+		// ä½¿å›¾æ ‡åœ¨å·¥ä½œåŒºçŸ©å½¢ä¸­å±…ä¸­
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
 		CRect rect;
@@ -177,7 +181,7 @@ void CMFCtest1Dlg::OnPaint()
 		int x = (rect.Width() - cxIcon + 1) / 2;
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// »æÖÆÍ¼±ê
+		// ç»˜åˆ¶å›¾æ ‡
 		dc.DrawIcon(x, y, m_hIcon);
 	}
 	else
@@ -186,8 +190,8 @@ void CMFCtest1Dlg::OnPaint()
 	}
 }
 
-//µ±ÓÃ»§ÍÏ¶¯×îĞ¡»¯´°¿ÚÊ±ÏµÍ³µ÷ÓÃ´Ëº¯ÊıÈ¡µÃ¹â±ê
-//ÏÔÊ¾¡£
+//å½“ç”¨æˆ·æ‹–åŠ¨æœ€å°åŒ–çª—å£æ—¶ç³»ç»Ÿè°ƒç”¨æ­¤å‡½æ•°å–å¾—å…‰æ ‡
+//æ˜¾ç¤ºã€‚
 HCURSOR CMFCtest1Dlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
@@ -198,7 +202,7 @@ HCURSOR CMFCtest1Dlg::OnQueryDragIcon()
 
 void CMFCtest1Dlg::OnBnClickedCalStopButton()
 {
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼şÍ¨Öª´¦Àí³ÌĞò´úÂë
+	// TODO: åœ¨æ­¤æ·»åŠ æ§ä»¶é€šçŸ¥å¤„ç†ç¨‹åºä»£ç 
 	UpdateData(TRUE);
 	CShowDlg *m_pShowDlg;
 
@@ -206,7 +210,7 @@ void CMFCtest1Dlg::OnBnClickedCalStopButton()
 	m_pShowDlg->Create(IDD_SHOW_DIALOG, this);
 	m_pShowDlg->ShowWindow(SW_SHOW);
 
-	//½«±ê¶¨±à¼­¿òÊı¾İ¶ÁÈë£¬Ö®ºó¿ÉÒÔ´¦Àí
+	//å°†æ ‡å®šç¼–è¾‘æ¡†æ•°æ®è¯»å…¥ï¼Œä¹‹åå¯ä»¥å¤„ç†
 	m_pShowDlg->editLong = m_editLong;
 	m_pShowDlg->editWide = m_editWide;
 	m_pShowDlg->editLUX = m_editLUX;
@@ -222,22 +226,37 @@ void CMFCtest1Dlg::OnBnClickedCalStopButton()
 
 
 
+<<<<<<< HEAD
 
 void CMFCtest1Dlg::OnBnClickedVideoButton()
 {
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼şÍ¨Öª´¦Àí³ÌĞò´úÂë
+	// TODO: ï¿½Ú´ï¿½ï¿½ï¿½Ó¿Ø¼ï¿½Í¨Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (!capture)
 	{
 		capture = cvCaptureFromCAM(0);
 		//AfxMessageBox("OK");??
 	}
+=======
+	//æœªç»çŸ«æ­£
+	Mat rawImage;
+	rawImage = denoised();
+
+	//å³å°†ä¼ é€’åˆ°åç»­æ“ä½œçš„ä¿¡æ¯ï¼ˆé€šè¿‡å…¨å±€å˜é‡ï¼‰
+	/*calibrationInfo cali;*/
+	
+	vector<Point2f> points;
+	points.push_back(Point2f(m_editLUX, m_editLUY));
+	points.push_back(Point2f(m_editRUX, m_editRUY));
+	points.push_back(Point2f(m_editLDX, m_editLDY));
+	points.push_back(Point2f(m_editRDX, m_editRDY));
+>>>>>>> åŠ å…¥å…¨å±€å˜é‡
 
 	if (!capture)
 	{
-		AfxMessageBox(_T("ÎŞ·¨´ò¿ªÉãÏñÍ·"));
+		AfxMessageBox(_T("ï¿½Ş·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·"));
 		return;
 	}
-	//?²âÊÔ??
+	//?ï¿½ï¿½ï¿½ï¿½??
 	IplImage *m_Frame;
 	m_Frame = cvQueryFrame(capture);
 	CvvImage m_CvvImage;
@@ -248,14 +267,19 @@ void CMFCtest1Dlg::OnBnClickedVideoButton()
 		//cvWaitKey(10);??
 	}
 
-	//?ÉèÖÃ¼ÆÊ±Æ÷,Ã¿10ms´¥·¢Ò»´ÎÊÂ¼ş??
+<<<<<<< HEAD
+	//?ï¿½ï¿½ï¿½Ã¼ï¿½Ê±ï¿½ï¿½,Ã¿10msï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Â¼ï¿½??
 	SetTimer(1, 10, NULL);
 }
+=======
+	//ä¼ å…¥çš„ç‚¹çš„é¡ºåºåº”è¯¥æ˜¯ï¼Œå·¦ä¸Šï¼Œå³ä¸Šï¼Œå·¦ä¸‹ï¼Œå³ä¸‹
+	cali = AffineTrans(points, m_editWide, m_editLong, rawImage);
+>>>>>>> åŠ å…¥å…¨å±€å˜é‡
 
 
 void CMFCtest1Dlg::OnTimer(UINT_PTR nIDEvent)
 {
-	// TODO: ÔÚ´ËÌí¼ÓÏûÏ¢´¦Àí³ÌĞò´úÂëºÍ/»òµ÷ÓÃÄ¬ÈÏÖµ
+	// TODO: ï¿½Ú´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Öµ
 	IplImage* m_Frame;
 	m_Frame = cvQueryFrame(capture);
 	CvvImage m_CvvImage;
@@ -266,13 +290,24 @@ void CMFCtest1Dlg::OnTimer(UINT_PTR nIDEvent)
 		//cvWaitKey(10);  
 	}
 
+<<<<<<< HEAD
 	CDialogEx::OnTimer(nIDEvent);
+=======
+	//cali å°†ä½œä¸ºå…¨å±€å˜é‡
+
+	/*å¤´æ–‡ä»¶ï¼šstate.h æºæ–‡ä»¶ï¼šstate.cpp
+		å…¶å®ƒæºæ–‡ä»¶ï¼št1.cpp t2.cpp t3.cpp, è¿™äº›æºæ–‡ä»¶éƒ½åŒ…å«å¤´æ–‡ä»¶state.hã€‚
+		éœ€è¦å®šä¹‰ä¸€ä¸ªå…¨å±€å˜é‡ä¾›è¿™äº›æºæ–‡ä»¶ä¸­ä½¿ç”¨ï¼šæ–¹æ³•å¦‚ä¸‹
+		1ã€åœ¨ state.hå£°æ˜å…¨å±€å˜é‡ï¼š extern int a;
+	2ã€åœ¨state.cppä¸­å®šä¹‰è¯¥å…¨å±€å˜é‡ï¼šint a = 10;
+	è¿™æ ·å…¶å®ƒæºæ–‡ä»¶å°±å¯ä»¥ä½¿ç”¨è¯¥å˜é‡å•¦*/
+>>>>>>> åŠ å…¥å…¨å±€å˜é‡
 }
 
 
 void CMFCtest1Dlg::OnBnClickedFinishButton()
 {
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼şÍ¨Öª´¦Àí³ÌĞò´úÂë
+	// TODO: ï¿½Ú´ï¿½ï¿½ï¿½Ó¿Ø¼ï¿½Í¨Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	cvReleaseCapture(&capture);
 	CDC MemDC;
 	CBitmap m_Bitmap1;
