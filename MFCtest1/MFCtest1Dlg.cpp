@@ -6,6 +6,7 @@
 #include "MFCtest1.h"
 #include "MFCtest1Dlg.h"
 #include "afxdialogex.h"
+#include "first_match.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -202,6 +203,8 @@ void CMFCtest1Dlg::OnBnClickedCalStopButton()
 	m_pShowDlg->editRUY = m_editRUX;
 	m_pShowDlg->editRDX = m_editRDX;
 	m_pShowDlg->editRDY = m_editRDY;
+
+
 }
 
 
