@@ -1,7 +1,8 @@
 /**
 http://blog.sina.com.cn/s/blog_58649eb30100th2k.html
 */
-//除了可乐都可以
+//第一个项目最终
+//算法未测试
 #include <stdio.h>
 #include <iostream>
 #include "opencv2/core/core.hpp"
