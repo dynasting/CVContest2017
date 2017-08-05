@@ -36,7 +36,7 @@
     <ClInclude Include="ShowDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="first_match.h">
+    <ClInclude Include="CvvImage.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,7 +53,7 @@
     <ClCompile Include="ShowDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="first_match.cpp">
+    <ClCompile Include="CvvImage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -69,6 +69,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MFCtest1.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bitmap1.bmp">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>
