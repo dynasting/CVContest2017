@@ -6,6 +6,7 @@
 #include "MFCtest1.h"
 #include "MFCtest1Dlg.h"
 #include "afxdialogex.h"
+#include "first_match.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -202,6 +203,27 @@ void CMFCtest1Dlg::OnBnClickedCalStopButton()
 	m_pShowDlg->editRUY = m_editRUX;
 	m_pShowDlg->editRDX = m_editRDX;
 	m_pShowDlg->editRDY = m_editRDY;
+
+	//未经矫正
+	Mat rawImage;
+	rawImage = denoised();
+
+	//即将传递到后续操作的信息（通过全局变量）
+	calibrationInfo cali;
+	
+	vector<Point2f> points;
+	points.push_back(Point2f(m_editLUX, m_editLUY));
+	points.push_back(Point2f(m_editRUX, m_editRUY));
+	points.push_back(Point2f(m_editLDX, m_editLDY));
+	points.push_back(Point2f(m_editRDX, m_editRDY));
+
+
+	//传入的点的顺序应该是，左上，右上，左下，右下
+	cali = AffineTrans(points, m_editWide, m_editLong, rawImage);
+
+
+
+	//cali 将作为全局变量
 }
 
 
