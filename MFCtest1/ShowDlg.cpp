@@ -6,7 +6,7 @@
 #include "ShowDlg.h"
 #include "afxdialogex.h"
 #include "MFCtest1Dlg.h"
-
+#include "first_match.h"
 // CShowDlg 对话框
 
 IMPLEMENT_DYNAMIC(CShowDlg, CDialogEx)

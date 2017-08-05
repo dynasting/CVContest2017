@@ -90,6 +90,7 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 	Mat Trans = getAffineTransform(scrPointsa, dstPoints);
 	warpAffine(color, dst, Trans, Size(color.cols, color.rows), CV_INTER_CUBIC);
 
+	
 	cv::imwrite("C:\\Users\\∏ﬂ∑Â\\Desktop\\±»»¸ÕºœÒ\\≤‚ ‘Õº∆¨\\–°Õº\\ready_to_recognize", dst);
 
 	afterTrans.physicalLenth = physicalheight;
@@ -431,4 +432,4 @@ Mat denoised()
 	return avrg_img;
 }
 
-
+calibrationInfo cali;
