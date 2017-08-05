@@ -9,6 +9,11 @@
 #endif
 
 #include "resource.h"		// Ö÷·ûºÅ
+#include "cxcore.h"
+#include "windows.h"
+#include "cv.h"
+#include "highgui.h"
+#include "CvvImage.h"
 
 
 // CMFCtest1App: 
