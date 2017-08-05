@@ -1,31 +1,31 @@
-
-// MFCtest1Dlg.h : Í·ÎÄ¼ş
+ï»¿
+// MFCtest1Dlg.h : å¤´æ–‡ä»¶
 //
 
 #pragma once
 #include "ShowDlg.h"
 
 
-// CMFCtest1Dlg ¶Ô»°¿ò
+// CMFCtest1Dlg å¯¹è¯æ¡†
 class CMFCtest1Dlg : public CDialogEx
 {
-// ¹¹Ôì
+// æ„é€ 
 public:
-	CMFCtest1Dlg(CWnd* pParent = NULL);	// ±ê×¼¹¹Ôìº¯Êı
+	CMFCtest1Dlg(CWnd* pParent = NULL);	// æ ‡å‡†æ„é€ å‡½æ•°
 
-// ¶Ô»°¿òÊı¾İ
+// å¯¹è¯æ¡†æ•°æ®
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_MFCTEST1_DIALOG };
 #endif
 
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV Ö§³Ö
+	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV æ”¯æŒ
 
-// ÊµÏÖ
+// å®ç°
 protected:
 	HICON m_hIcon;
 
-	// Éú³ÉµÄÏûÏ¢Ó³Éäº¯Êı
+	// ç”Ÿæˆçš„æ¶ˆæ¯æ˜ å°„å‡½æ•°
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
