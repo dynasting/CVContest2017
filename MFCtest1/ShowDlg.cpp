@@ -165,13 +165,13 @@ void CShowDlg::OnBnClickedRecBeginButton()
 
 
 	//用于识别的图像
-	Mat color_denoised = imread("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize", 1);
+	Mat color_denoised = imread("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize.jpg", 1);
 
 	//ROI set
 	//向内挖去5像素
 	//参见first_match.h 中 OFFSET=5
 
-	Rect region_of_interest = Rect(OFFSET, OFFSET, color_denoised.cols, color_denoised.rows);
+	Rect region_of_interest = Rect(OFFSET, OFFSET, color_denoised.cols-2* OFFSET, color_denoised.rows-2* OFFSET);
 	Mat image_roi = color_denoised(region_of_interest);
 
 

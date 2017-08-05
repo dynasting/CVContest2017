@@ -91,7 +91,7 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 	warpAffine(color, dst, Trans, Size(color.cols, color.rows), CV_INTER_CUBIC);
 
 	
-	cv::imwrite("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize", dst);
+	cv::imwrite("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize.jpg", dst);
 
 	afterTrans.physicalLenth = physicalheight;
 	afterTrans.physicalWidth = physicalwidth;
