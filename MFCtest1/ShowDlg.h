@@ -1,6 +1,6 @@
-#pragma once
+ï»¿#pragma once
 
-// CShowDlg ¶Ô»°¿ò
+// CShowDlg å¯¹è¯æ¡†
 
 
 class CShowDlg : public CDialogEx
@@ -8,10 +8,10 @@ class CShowDlg : public CDialogEx
 	DECLARE_DYNAMIC(CShowDlg)
 
 public:
-	CShowDlg(CWnd* pParent = NULL);   // ±ê×¼¹¹Ôìº¯Êı
+	CShowDlg(CWnd* pParent = NULL);   // æ ‡å‡†æ„é€ å‡½æ•°
 	virtual ~CShowDlg();
 
-// ¶Ô»°¿òÊı¾İ
+// å¯¹è¯æ¡†æ•°æ®
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_SHOW_DIALOG };
 #endif
@@ -19,7 +19,7 @@ public:
 	//virtual BOOL OnInitDialog();
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV æ”¯æŒ
 
 	DECLARE_MESSAGE_MAP()
 public:

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef  FIRST_MATCH_H
 #define FIRST_MATCH_H
 
@@ -26,9 +26,9 @@ using namespace std;
 /*
 unit pix
 bool ifshape
-colorID  ºÚºì»ÆÂÌÀ¶12345
-shapeID  Ô² Õı·½ĞÎ ³¤·½ĞÎ ÍÖÔ² 1234
-objID	 ¿ÉÀÖ ¿ÚÏãÌÇ ·½±ãÃæ ±ı¸É 81 82 83 84
+colorID  é»‘çº¢é»„ç»¿è“12345
+shapeID  åœ† æ­£æ–¹å½¢ é•¿æ–¹å½¢ æ¤­åœ† 1234
+objID	 å¯ä¹ å£é¦™ç³– æ–¹ä¾¿é¢ é¥¼å¹² 81 82 83 84
 shapeCompleteID = 10*colorID + shapeID
 double centreX.Y
 double angle
@@ -37,9 +37,9 @@ double area
 struct rawResult
 {
 	bool ifShape;
-	int colorID;//colorID  ºÚºì»ÆÂÌÀ¶12345
-	int shapeID;//shapeID  Ô² Õı·½ĞÎ ³¤·½ĞÎ ÍÖÔ² 1234
-	int objID;//objID	 ¿ÉÀÖ ¿ÚÏãÌÇ ·½±ãÃæ ±ı¸É 81 82 83 84
+	int colorID;//colorID  é»‘çº¢é»„ç»¿è“12345
+	int shapeID;//shapeID  åœ† æ­£æ–¹å½¢ é•¿æ–¹å½¢ æ¤­åœ† 1234
+	int objID;//objID	 å¯ä¹ å£é¦™ç³– æ–¹ä¾¿é¢ é¥¼å¹² 81 82 83 84
 	int shapeComleteID;//shapeCompleteID = 10*colorID + shapeID
 	double centreX, centreY;
 	double angle;
@@ -49,9 +49,9 @@ struct rawResult
 /*
 final result for display
 unit cm
-colorID  ºÚºì»ÆÂÌÀ¶12345
-shapeID  Ô² Õı·½ĞÎ ³¤·½ĞÎ ÍÖÔ² 1234
-objID	 ¿ÉÀÖ ¿ÚÏãÌÇ ·½±ãÃæ ±ı¸É 81 82 83 84
+colorID  é»‘çº¢é»„ç»¿è“12345
+shapeID  åœ† æ­£æ–¹å½¢ é•¿æ–¹å½¢ æ¤­åœ† 1234
+objID	 å¯ä¹ å£é¦™ç³– æ–¹ä¾¿é¢ é¥¼å¹² 81 82 83 84
 shapeCompleteID = 10*colorID + shapeID
 */
 struct finalResult
@@ -89,19 +89,19 @@ struct calibrationInfo
 
 
 
-//³õ´Î±ê¶¨
-//color Îª½µÔëºóµÄ²ÊÉ«Í¼
-//Á½¸ödoubleÀ´×Ô±ê¶¨Êı¾İ
-//µãµÄvectorÀ´×Ô±ê¶¨
-//Êä³ö½á¹¹Ìå ´øphysicalµÄÎªÊµ¼Ê²âÁ¿µÄÊı¾İ
-//²»´øµÄÎªÊä³öÍ¼Æ¬µÄ³¤¿í
-//Êä³öµÄ½á¹ûimwrite()
-//´«ÈëµÄµãµÄË³ĞòÓ¦¸ÃÊÇ£¬×óÉÏ£¬ÓÒÉÏ£¬×óÏÂ£¬ÓÒÏÂ
-//Å¤µÄÊ±ºòÎÒÊÇÓ³ÉäËùÒÔÓÃÇ°Èı¸ö£¬ËãÃæ»ıÓÃËÄ¸ö
-//È»ºó£¬Èç¹û¾õµÃĞ§¹û²»ºÃ¡£¡£¿ÉÒÔ¿¼ÂÇ»»¸ö±ä»»ÓÃÄÇ¸öĞèÒªËÄ¸öµãµÄ¡£¡£
+//åˆæ¬¡æ ‡å®š
+//color ä¸ºé™å™ªåçš„å½©è‰²å›¾
+//ä¸¤ä¸ªdoubleæ¥è‡ªæ ‡å®šæ•°æ®
+//ç‚¹çš„vectoræ¥è‡ªæ ‡å®š
+//è¾“å‡ºç»“æ„ä½“ å¸¦physicalçš„ä¸ºå®é™…æµ‹é‡çš„æ•°æ®
+//ä¸å¸¦çš„ä¸ºè¾“å‡ºå›¾ç‰‡çš„é•¿å®½
+//è¾“å‡ºçš„ç»“æœimwrite()
+//ä¼ å…¥çš„ç‚¹çš„é¡ºåºåº”è¯¥æ˜¯ï¼Œå·¦ä¸Šï¼Œå³ä¸Šï¼Œå·¦ä¸‹ï¼Œå³ä¸‹
+//æ‰­çš„æ—¶å€™æˆ‘æ˜¯æ˜ å°„æ‰€ä»¥ç”¨å‰ä¸‰ä¸ªï¼Œç®—é¢ç§¯ç”¨å››ä¸ª
+//ç„¶åï¼Œå¦‚æœè§‰å¾—æ•ˆæœä¸å¥½ã€‚ã€‚å¯ä»¥è€ƒè™‘æ¢ä¸ªå˜æ¢ç”¨é‚£ä¸ªéœ€è¦å››ä¸ªç‚¹çš„ã€‚ã€‚
 calibrationInfo AffineTrans(vector <Point2f> scrPoints, double physicalwidth, double physicalheight,Mat& color);
 
-//Í¼Æ¬½µÔë
+//å›¾ç‰‡é™å™ª
 
 
 
@@ -109,7 +109,7 @@ calibrationInfo AffineTrans(vector <Point2f> scrPoints, double physicalwidth, do
 convert function
 input in ROI result
 output in cm (final answer)
-ÍêÕûid¼ÆËãÔÚraw resultÉú³ÉÊ±Íê³É ÔÚ´ËÈ·ÈÏ
+å®Œæ•´idè®¡ç®—åœ¨raw resultç”Ÿæˆæ—¶å®Œæˆ åœ¨æ­¤ç¡®è®¤
 */
 finalResult rawresultToFinalResult(rawResult raw, calibrationInfo info);
 
@@ -121,28 +121,28 @@ finalResult rawresultToFinalResult(rawResult raw, calibrationInfo info);
 static double angle(cv::Point pt1, cv::Point pt2, cv::Point pt0);
 
 /*
-»ñÈ¡ÑÕÉ«
-input RGB¿Õ¼äÍ¼Ïñ
+è·å–é¢œè‰²
+input RGBç©ºé—´å›¾åƒ
 output int colorID
-²»¸Ä±äÊäÈë
+ä¸æ”¹å˜è¾“å…¥
 */
 int getColor(const Mat& input, int x, int y);
 
 
 /*
-input Êı×éÖ¸Õë rawResult[5]
+input æ•°ç»„æŒ‡é’ˆ rawResult[5]
 input Mat
 
 @@@ ROI set finished
-output Ä¿±ê¸öÊı
+output ç›®æ ‡ä¸ªæ•°
 */
 vector <rawResult> recognize(Mat& img_scene);
 
 
 
 /*
-ÅÄÕÕ
-½µÔë
+æ‹ç…§
+é™å™ª
 */
 Mat denoised();
 
