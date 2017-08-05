@@ -1,4 +1,4 @@
-﻿/**
+/*
 http://blog.sina.com.cn/s/blog_58649eb30100th2k.html
 */
 //除了可乐都可以
@@ -90,7 +90,9 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 	Mat Trans = getAffineTransform(scrPointsa, dstPoints);
 	warpAffine(color, dst, Trans, Size(color.cols, color.rows), CV_INTER_CUBIC);
 
-	cv::imwrite("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize", dst);
+
+	cv::imwrite("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize.jpg", dst);
+
 
 	afterTrans.physicalLenth = physicalheight;
 	afterTrans.physicalWidth = physicalwidth;
@@ -432,9 +434,5 @@ Mat denoised()
 }
 
 
-
 calibrationInfo cali;
-
-
-
 

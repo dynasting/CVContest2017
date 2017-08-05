@@ -1,4 +1,4 @@
-﻿
+
 // MFCtest1Dlg.cpp : 实现文件
 //
 
@@ -12,6 +12,11 @@
 #define new DEBUG_NEW
 #endif
 
+CvCapture *capture;
+CRect rect;
+CDC *pDC;
+HDC hDC;
+CWnd *pwnd;
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
@@ -20,15 +25,17 @@ class CAboutDlg : public CDialogEx
 public:
 	CAboutDlg();
 
-// 对话框数据
+
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_ABOUTBOX };
 #endif
+
 
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 // 实现
+
 protected:
 	DECLARE_MESSAGE_MAP()
 };
@@ -91,6 +98,9 @@ BEGIN_MESSAGE_MAP(CMFCtest1Dlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_CAL_STOP_BUTTON, &CMFCtest1Dlg::OnBnClickedCalStopButton)
+	ON_BN_CLICKED(IDC_VIDEO_BUTTON, &CMFCtest1Dlg::OnBnClickedVideoButton)
+	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_FINISH_BUTTON, &CMFCtest1Dlg::OnBnClickedFinishButton)
 END_MESSAGE_MAP()
 
 
@@ -125,7 +135,16 @@ BOOL CMFCtest1Dlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
-	// TODO: 在此添加额外的初始化代码
+
+									// TODO: 在此添加额外的初始化代码
+	pwnd = GetDlgItem(IDC_VIDEO);
+	//pwnd->MoveWindow(35,30,352,288);  
+	pDC = pwnd->GetDC();
+	//pDC =GetDC();  
+	hDC = pDC->GetSafeHdc();
+	pwnd->GetClientRect(&rect);
+	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
+
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -210,7 +229,7 @@ void CMFCtest1Dlg::OnBnClickedCalStopButton()
 
 	//即将传递到后续操作的信息（通过全局变量）
 	/*calibrationInfo cali;*/
-	
+
 	vector<Point2f> points;
 	points.push_back(Point2f(m_editLUX, m_editLUY));
 	points.push_back(Point2f(m_editRUX, m_editRUY));
@@ -226,12 +245,75 @@ void CMFCtest1Dlg::OnBnClickedCalStopButton()
 	//cali 将作为全局变量
 
 	/*头文件：state.h 源文件：state.cpp
-		其它源文件：t1.cpp t2.cpp t3.cpp, 这些源文件都包含头文件state.h。
-		需要定义一个全局变量供这些源文件中使用：方法如下
-		1、在 state.h声明全局变量： extern int a;
+
+	其它源文件：t1.cpp t2.cpp t3.cpp, 这些源文件都包含头文件state.h。
+	需要定义一个全局变量供这些源文件中使用：方法如下
+	1、在 state.h声明全局变量： extern int a;
 	2、在state.cpp中定义该全局变量：int a = 10;
 	这样其它源文件就可以使用该变量啦*/
 }
 
 
 
+
+
+void CMFCtest1Dlg::OnBnClickedVideoButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if (!capture)
+	{
+		capture = cvCaptureFromCAM(0);
+		//AfxMessageBox("OK");  
+	}
+
+	if (!capture)
+	{
+		AfxMessageBox(_T("无法打开摄像头"));
+		return;
+	}
+	// 测试  
+	IplImage *m_Frame;
+	m_Frame = cvQueryFrame(capture);
+	CvvImage m_CvvImage;
+	m_CvvImage.CopyOf(m_Frame, 1);
+	if (true)
+	{
+		m_CvvImage.DrawToHDC(hDC, &rect);
+		//cvWaitKey(10);  
+	}
+
+	// 设置计时器,每10ms触发一次事件  
+	SetTimer(1, 10, NULL);
+}
+
+
+void CMFCtest1Dlg::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	IplImage* m_Frame;
+	m_Frame = cvQueryFrame(capture);
+	CvvImage m_CvvImage;
+	m_CvvImage.CopyOf(m_Frame, 1);
+	if (true)
+	{
+		m_CvvImage.DrawToHDC(hDC, &rect);
+		//cvWaitKey(10);  
+	}
+
+	CDialogEx::OnTimer(nIDEvent);
+
+}
+
+
+void CMFCtest1Dlg::OnBnClickedFinishButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	cvReleaseCapture(&capture);
+	CDC MemDC;
+	CBitmap m_Bitmap1;
+	m_Bitmap1.LoadBitmap(IDB_BITMAP1);
+	MemDC.CreateCompatibleDC(NULL);
+	MemDC.SelectObject(&m_Bitmap1);
+	pDC->StretchBlt(rect.left, rect.top, rect.Width(), rect.Height(), &MemDC, 0, 0, 48, 48, SRCCOPY);
+
+}

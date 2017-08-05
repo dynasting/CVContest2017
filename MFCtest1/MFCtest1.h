@@ -1,4 +1,4 @@
-﻿
+
 // MFCtest1.h : PROJECT_NAME 应用程序的主头文件
 //
 
@@ -9,6 +9,14 @@
 #endif
 
 #include "resource.h"		// 主符号
+
+#include "cxcore.h"
+#include "windows.h"
+#include "cv.h"
+#include "highgui.h"
+#include "CvvImage.h"
+
+
 
 
 // CMFCtest1App: 
