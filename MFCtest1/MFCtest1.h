@@ -1,14 +1,14 @@
-
-// MFCtest1.h : PROJECT_NAME Ó¦ÓÃ³ÌĞòµÄÖ÷Í·ÎÄ¼ş
+ï»¿
+// MFCtest1.h : PROJECT_NAME Ó¦ï¿½Ã³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½Ä¼ï¿½
 //
 
 #pragma once
 
 #ifndef __AFXWIN_H__
-	#error "ÔÚ°üº¬´ËÎÄ¼şÖ®Ç°°üº¬¡°stdafx.h¡±ÒÔÉú³É PCH ÎÄ¼ş"
+	#error "åœ¨åŒ…å«æ­¤æ–‡ä»¶ä¹‹å‰åŒ…å«â€œstdafx.hâ€ä»¥ç”Ÿæˆ PCH æ–‡ä»¶"
 #endif
 
-#include "resource.h"		// Ö÷·ûºÅ
+#include "resource.h"		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #include "cxcore.h"
 #include "windows.h"
 #include "cv.h"
@@ -17,7 +17,7 @@
 
 
 // CMFCtest1App: 
-// ÓĞ¹Ø´ËÀàµÄÊµÏÖ£¬Çë²ÎÔÄ MFCtest1.cpp
+// ï¿½Ğ¹Ø´ï¿½ï¿½ï¿½ï¿½Êµï¿½Ö£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MFCtest1.cpp
 //
 
 class CMFCtest1App : public CWinApp
@@ -25,11 +25,11 @@ class CMFCtest1App : public CWinApp
 public:
 	CMFCtest1App();
 
-// ÖØĞ´
+// ï¿½ï¿½Ğ´
 public:
 	virtual BOOL InitInstance();
 
-// ÊµÏÖ
+// Êµï¿½ï¿½
 
 	DECLARE_MESSAGE_MAP()
 };
