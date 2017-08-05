@@ -1,7 +1,7 @@
-/**
+/*
 http://blog.sina.com.cn/s/blog_58649eb30100th2k.html
 */
-//³ıÁË¿ÉÀÖ¶¼¿ÉÒÔ
+//é™¤äº†å¯ä¹éƒ½å¯ä»¥
 #include <stdio.h>
 #include <iostream>
 #include "opencv2/core/core.hpp"
@@ -82,7 +82,7 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 	dstPoints[0].y = 0;
 	dstPoints[1].y = 0;
 	dstPoints[2].x = 0;
-	//Éè¿íphysicalwidth*k,¸ßphysicalheight*k£¬¸ù¾İÃæ»ı²»±ä¼ÆËã³ök£¬Ëæºó¼ÆËã³ö¿í¸ß
+	//è®¾å®½physicalwidth*k,é«˜physicalheight*kï¼Œæ ¹æ®é¢ç§¯ä¸å˜è®¡ç®—å‡ºkï¼Œéšåè®¡ç®—å‡ºå®½é«˜
 	double k = sqrt(area / (physicalwidth*physicalheight));
 	dstPoints[1].x = physicalwidth*k;
 	dstPoints[2].y = physicalheight*k;
@@ -90,8 +90,9 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 	Mat Trans = getAffineTransform(scrPointsa, dstPoints);
 	warpAffine(color, dst, Trans, Size(color.cols, color.rows), CV_INTER_CUBIC);
 
-	
-	cv::imwrite("C:\\Users\\¸ß·å\\Desktop\\±ÈÈüÍ¼Ïñ\\²âÊÔÍ¼Æ¬\\Ğ¡Í¼\\ready_to_recognize.jpg", dst);
+
+	cv::imwrite("C:\\Users\\é«˜å³°\\Desktop\\æ¯”èµ›å›¾åƒ\\æµ‹è¯•å›¾ç‰‡\\å°å›¾\\ready_to_recognize.jpg", dst);
+
 
 	afterTrans.physicalLenth = physicalheight;
 	afterTrans.physicalWidth = physicalwidth;
@@ -105,7 +106,7 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 convert function
 input in ROI result
 output in cm (final answer)
-ÍêÕûid¼ÆËãÔÚraw resultÉú³ÉÊ±Íê³É ÔÚ´ËÈ·ÈÏ
+å®Œæ•´idè®¡ç®—åœ¨raw resultç”Ÿæˆæ—¶å®Œæˆ åœ¨æ­¤ç¡®è®¤
 */
 finalResult rawresultToFinalResult(rawResult raw, calibrationInfo info) {
 
@@ -143,10 +144,10 @@ static double angle(cv::Point pt1, cv::Point pt2, cv::Point pt0)
 }
 
 /*
-»ñÈ¡ÑÕÉ«
-input RGB¿Õ¼äÍ¼Ïñ
+è·å–é¢œè‰²
+input RGBç©ºé—´å›¾åƒ
 output int colorID
-²»¸Ä±äÊäÈë
+ä¸æ”¹å˜è¾“å…¥
 */
 int getColor(const Mat& input, int x, int y) {
 	
@@ -162,28 +163,28 @@ int getColor(const Mat& input, int x, int y) {
 	int S = hsv.val[1];
 	int V = hsv.val[2];
 
-	//ºÚÉ« id 1
+	//é»‘è‰² id 1
 	if (V <= 46) return 1;
 
-	//ºìÉ« id 2
+	//çº¢è‰² id 2
 	else if (   (H<=10||H>=156)  &&  V>=46  &&  S>=43   )
 	{
 		return 2;
 	}
 	
-	//»ÆÉ« id 3
+	//é»„è‰² id 3
 	else if (H >= 26 && H <= 34 && S >= 43 && V >= 46)
 	{
 		return 3;
 	}
 
-	//ÂÌÉ« id 4
+	//ç»¿è‰² id 4
 	else if (H >= 35 && H <= 77 && S >= 43 && V >= 46)
 	{
 		return 4;
 	}
 
-	//À¶É« id 5
+	//è“è‰² id 5
 	else
 	{
 		return 5;
@@ -192,18 +193,18 @@ int getColor(const Mat& input, int x, int y) {
 }
 
 /*
-input Êı×éÖ¸Õë rawResult[5]
+input æ•°ç»„æŒ‡é’ˆ rawResult[5]
 	  input Mat
-	  ÕÕÆ¬ĞèÒª´Ó±¾µØ¶ÁÈ¡
+	  ç…§ç‰‡éœ€è¦ä»æœ¬åœ°è¯»å–
 	  @@@ ROI set finished
-output Ä¿±ê¸öÊı
+output ç›®æ ‡ä¸ªæ•°
 */
 
 vector <rawResult> recognize(Mat& img_scene){
 	vector <rawResult> result;
 
-	//Mat img_scene = imread("C:\\Users\\Ò¦ÀÖÓî\\Desktop\\test3.jpg");
-	//Mat img_scene = imread("D:\\×ÊÁÏ\\yly\\myProject\\opencv_test_2.4.11\\test_project_2.4.13.2\\basic-shapes-2.png");
+	//Mat img_scene = imread("C:\\Users\\å§šä¹å®‡\\Desktop\\test3.jpg");
+	//Mat img_scene = imread("D:\\èµ„æ–™\\yly\\myProject\\opencv_test_2.4.11\\test_project_2.4.13.2\\basic-shapes-2.png");
 	
 	
 
@@ -226,7 +227,7 @@ vector <rawResult> recognize(Mat& img_scene){
 
 
 
-	//±éÀú¸÷contours
+	//éå†å„contours
 	for (int i = 0; i < contours.size(); i++)
 	{
 		// Approximate contour with accuracy proportional
@@ -239,7 +240,7 @@ vector <rawResult> recognize(Mat& img_scene){
 
 		/*
 
-		²»ĞèÒªÈı½ÇĞÎ
+		ä¸éœ€è¦ä¸‰è§’å½¢
 
 		if (approx.size() == 3)
 		{
@@ -271,8 +272,8 @@ vector <rawResult> recognize(Mat& img_scene){
 
 				//setLabel(dst, "RECT", contours[i]);
 
-				//È·ÈÏÎª¾ØĞÎ
-				//ÏÂÃæ½øĞĞ¼ÆËã
+				//ç¡®è®¤ä¸ºçŸ©å½¢
+				//ä¸‹é¢è¿›è¡Œè®¡ç®—
 
 				rawResult singleResult;
 
@@ -289,8 +290,8 @@ vector <rawResult> recognize(Mat& img_scene){
 				singleResult.area = height * width;
 
 
-				//È·ÈÏ³¤¶ÌÖá
-				//¼ÆËã½Ç¶ÈÈ¡µã
+				//ç¡®è®¤é•¿çŸ­è½´
+				//è®¡ç®—è§’åº¦å–ç‚¹
 				Point p1, p2;
 				double major, minor;
 
@@ -308,15 +309,15 @@ vector <rawResult> recognize(Mat& img_scene){
 					p2 = approx[2];
 				}
 
-				//Êä³ö½Ç¶È
+				//è¾“å‡ºè§’åº¦
 				singleResult.angle=atan2((p1.y-p2.y),(p1.x-p2.x)) * 180 / PI;
 
-				//Êä³öcentre
+				//è¾“å‡ºcentre
 				singleResult.centreX = (approx[0].x+ approx[1].x+ approx[2].x+ approx[3].x) / 4;
 				singleResult.centreY = (approx[0].y + approx[1].y + approx[2].y + approx[3].y) / 4;
 
 
-				//ĞÎ×´ID
+				//å½¢çŠ¶ID
 				if (minor / major < 0.85) singleResult.shapeID = 3;
 				else singleResult.shapeID = 2;
 
@@ -332,7 +333,7 @@ vector <rawResult> recognize(Mat& img_scene){
 
 			/*
 			
-			²»ĞèÒª5¡¢6±ßĞÎ
+			ä¸éœ€è¦5ã€6è¾¹å½¢
 
 			else if (vtc == 5 && mincos >= -0.34 && maxcos <= -0.27)
 				setLabel(dst, "PENTA", contours[i]);
@@ -353,8 +354,8 @@ vector <rawResult> recognize(Mat& img_scene){
 			if (MAX(box.size.width, box.size.height) > MIN(box.size.width, box.size.height) * 30)
 				continue;
 
-			//È·ÈÏÎªÍÖÔ²
-			//¿ªÊ¼´¦Àí
+			//ç¡®è®¤ä¸ºæ¤­åœ†
+			//å¼€å§‹å¤„ç†
 			rawResult singleResult;
 
 			double major, minor;
@@ -371,7 +372,7 @@ vector <rawResult> recognize(Mat& img_scene){
 			singleResult.angle = box.angle - (double) 180;
 			singleResult.colorID = getColor(img_scene, singleResult.centreX, singleResult.centreY);
 
-			//ĞÎ×´ID
+			//å½¢çŠ¶ID
 			if (minor / major < 0.85) singleResult.shapeID = 4;
 			else singleResult.shapeID = 1;
 
@@ -380,12 +381,12 @@ vector <rawResult> recognize(Mat& img_scene){
 			singleResult.ifShape = true;
 			//ares
 			singleResult.area =(double)  (box.size.area() * PI / 4);
-		//	´ıÍê³É
+		//	å¾…å®Œæˆ
 			//results[numOfTargets].centreX=(int) ((r.br+++)/4)
 
 			/*
 			
-			ÎªÊ¶±ğÔ²ºÍÍÖÔ²½øĞĞÁËĞŞ¸Ä
+			ä¸ºè¯†åˆ«åœ†å’Œæ¤­åœ†è¿›è¡Œäº†ä¿®æ”¹
 
 			// Detect and label circles
 			double area = cv::contourArea(contours[i]);
@@ -398,7 +399,7 @@ vector <rawResult> recognize(Mat& img_scene){
 
 
 			*/
-			//¸üĞÂÄ¿±êÊıÁ¿
+			//æ›´æ–°ç›®æ ‡æ•°é‡
 			result.push_back(singleResult);
 
 		}
@@ -428,8 +429,10 @@ Mat denoised()
 	}
 	
 	avrg_img.convertTo(avrg_img, CV_8UC3, 255.0);
-	//cv::imwrite("C:\\Users\\¸ß·å\\Desktop\\±ÈÈüÍ¼Ïñ\\²âÊÔÍ¼Æ¬\\Ğ¡Í¼\\denoised.jpg", avrg_img);
+	//cv::imwrite("C:\\Users\\é«˜å³°\\Desktop\\æ¯”èµ›å›¾åƒ\\æµ‹è¯•å›¾ç‰‡\\å°å›¾\\denoised.jpg", avrg_img);
 	return avrg_img;
 }
 
+
 calibrationInfo cali;
+

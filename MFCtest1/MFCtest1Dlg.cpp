@@ -1,4 +1,4 @@
-﻿
+
 // MFCtest1Dlg.cpp : 实现文件
 //
 
@@ -25,15 +25,17 @@ class CAboutDlg : public CDialogEx
 public:
 	CAboutDlg();
 
-	// 对话框数据
+
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_ABOUTBOX };
 #endif
 
-protected:
+
+	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
-														// 实现
+// 实现
+
 protected:
 	DECLARE_MESSAGE_MAP()
 };
@@ -133,6 +135,7 @@ BOOL CMFCtest1Dlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
+
 									// TODO: 在此添加额外的初始化代码
 	pwnd = GetDlgItem(IDC_VIDEO);
 	//pwnd->MoveWindow(35,30,352,288);  
@@ -141,6 +144,7 @@ BOOL CMFCtest1Dlg::OnInitDialog()
 	hDC = pDC->GetSafeHdc();
 	pwnd->GetClientRect(&rect);
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
+
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -241,6 +245,7 @@ void CMFCtest1Dlg::OnBnClickedCalStopButton()
 	//cali 将作为全局变量
 
 	/*头文件：state.h 源文件：state.cpp
+
 	其它源文件：t1.cpp t2.cpp t3.cpp, 这些源文件都包含头文件state.h。
 	需要定义一个全局变量供这些源文件中使用：方法如下
 	1、在 state.h声明全局变量： extern int a;
@@ -296,6 +301,7 @@ void CMFCtest1Dlg::OnTimer(UINT_PTR nIDEvent)
 	}
 
 	CDialogEx::OnTimer(nIDEvent);
+
 }
 
 

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #ifndef  FIRST_MATCH_H
 #define FIRST_MATCH_H
 
@@ -146,7 +146,9 @@ vector <rawResult> recognize(Mat& img_scene);
 */
 Mat denoised();
 
+
 extern calibrationInfo cali;
+
 #endif // ! FIRST_MATCH_H
 
 #ifndef MIN
