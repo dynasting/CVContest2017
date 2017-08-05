@@ -164,7 +164,7 @@ void CShowDlg::OnBnClickedRecBeginButton()
 
 	//标定数据需要传过来
 	//这些数据是为了通过编译用的 应来源于标定
-	calibrationInfo cali;
+	/*calibrationInfo cali;*/
 	cali.lenth = 400;
 	cali.width = 400;
 	cali.physicalLenth = 72;

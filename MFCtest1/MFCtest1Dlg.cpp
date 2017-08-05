@@ -209,7 +209,7 @@ void CMFCtest1Dlg::OnBnClickedCalStopButton()
 	rawImage = denoised();
 
 	//即将传递到后续操作的信息（通过全局变量）
-	calibrationInfo cali;
+	/*calibrationInfo cali;*/
 	
 	vector<Point2f> points;
 	points.push_back(Point2f(m_editLUX, m_editLUY));
@@ -224,6 +224,13 @@ void CMFCtest1Dlg::OnBnClickedCalStopButton()
 
 
 	//cali 将作为全局变量
+
+	/*头文件：state.h 源文件：state.cpp
+		其它源文件：t1.cpp t2.cpp t3.cpp, 这些源文件都包含头文件state.h。
+		需要定义一个全局变量供这些源文件中使用：方法如下
+		1、在 state.h声明全局变量： extern int a;
+	2、在state.cpp中定义该全局变量：int a = 10;
+	这样其它源文件就可以使用该变量啦*/
 }
 
 
