@@ -165,7 +165,7 @@ void CShowDlg::OnBnClickedRecBeginButton()
 
 
 	//用于识别的图像
-	Mat color_denoised = imread("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize.jpg", 1);
+	Mat color_denoised = imread("C:\\ready_to_recognize.jpg", 1);
 
 	//ROI set
 	//向内挖去5像素
