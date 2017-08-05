@@ -7,6 +7,8 @@
 #include "afxdialogex.h"
 #include "MFCtest1Dlg.h"
 
+#include "first_match.h"
+
 // CShowDlg 对话框
 
 IMPLEMENT_DYNAMIC(CShowDlg, CDialogEx)
@@ -64,7 +66,6 @@ CShowDlg::CShowDlg(CWnd* pParent /*=NULL*/)
 	, m_edit10Y(0)
 	, m_edit10TH(0)
 	, m_edit10S(0)
-	, m_double()
 {
 
 }
@@ -153,8 +154,51 @@ void CShowDlg::OnBnClickedRecBeginButton()
 	//CMFCtest1Dlg *pDlg1 = (CMFCtest1Dlg*)this->GetParent();
 	//m_edit2S = pDlg1->m_editLDX;
 
-	m_double[9][4] = 100 ;
-	numChange();
+	//m_edit2S = editLUX;
+	m_edit2TH = 100;
+
+
+
+	//识别程序从这里开始
+
+
+	//标定数据需要传过来
+	//这些数据是为了通过编译用的 应来源于标定
+	calibrationInfo cali;
+	cali.lenth = 400;
+	cali.width = 400;
+	cali.physicalLenth = 72;
+	cali.physicalWidth = 72;
+
+
+	//用于识别的图像
+	Mat color_denoised = imread("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize", 1);
+
+	//ROI set
+	//向内挖去5像素
+	//参见first_match.h 中 OFFSET=5
+	
+	Rect region_of_interest = Rect(OFFSET, OFFSET, color_denoised.cols, color_denoised.rows);
+	Mat image_roi = color_denoised(region_of_interest);
+
+
+	vector <rawResult> rawresults;
+	rawresults = recognize(image_roi);
+
+	//完成识别  进行比例运算
+	vector <finalResult> finalresults;
+	for (size_t i = 0; i < rawresults.size(); i++) {
+		finalresults.push_back(rawresultToFinalResult(rawresults[i], cali));
+
+	}
+
+
+	//将使用一些效率较低的方式完成数据输出
+	//或改变相关定义优化
+
+	
+
+	//to do
 	UpdateData(FALSE);
 }
 
@@ -162,59 +206,4 @@ void CShowDlg::OnClose()
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	CDialogEx::OnClose();
-}
-
-
-void CShowDlg::numChange()
-{
-	m_edit1ID = m_double[0][0];
-	m_edit1X = m_double[0][1];
-	m_edit1Y = m_double[0][2];
-	m_edit1TH = m_double[0][3];
-	m_edit1S = m_double[0][4];
-	m_edit2ID = m_double[1][0];
-	m_edit2X = m_double[1][1];
-	m_edit2Y = m_double[1][2];
-	m_edit2TH = m_double[1][3];
-	m_edit2S = m_double[1][4];
-	m_edit3ID = m_double[2][0];
-	m_edit3X = m_double[2][1];
-	m_edit3Y = m_double[2][2];
-	m_edit3TH = m_double[2][3];
-	m_edit3S = m_double[2][4];
-	m_edit4ID = m_double[3][0];
-	m_edit4X = m_double[3][1];
-	m_edit4Y = m_double[3][2];
-	m_edit4TH = m_double[3][3];
-	m_edit4S = m_double[3][4];
-	m_edit5ID = m_double[4][0];
-	m_edit5X = m_double[4][1];
-	m_edit5Y = m_double[4][2];
-	m_edit5TH = m_double[4][3];
-	m_edit5S = m_double[4][4];
-	m_edit6ID = m_double[5][0];
-	m_edit6X = m_double[5][1];
-	m_edit6Y = m_double[5][2];
-	m_edit6TH = m_double[5][3];
-	m_edit6S = m_double[5][4];
-	m_edit7ID = m_double[6][0];
-	m_edit7X = m_double[6][1];
-	m_edit7Y = m_double[6][2];
-	m_edit7TH = m_double[6][3];
-	m_edit7S = m_double[6][4];
-	m_edit8ID = m_double[7][0];
-	m_edit8X = m_double[7][1];
-	m_edit8Y = m_double[7][2];
-	m_edit8TH = m_double[7][3];
-	m_edit8S = m_double[7][4];
-	m_edit9ID = m_double[8][0];
-	m_edit9X = m_double[8][1];
-	m_edit9Y = m_double[8][2];
-	m_edit9TH = m_double[8][3];
-	m_edit9S = m_double[8][4];
-	m_edit10ID = m_double[9][0];
-	m_edit10X = m_double[9][1];
-	m_edit10Y = m_double[9][2];
-	m_edit10TH = m_double[9][3];
-	m_edit10S = m_double[9][4];
 }

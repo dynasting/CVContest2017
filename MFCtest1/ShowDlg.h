@@ -87,6 +87,4 @@ public:
 	double m_edit10S;
 	afx_msg void OnBnClickedRecBeginButton();
 	afx_msg void OnClose();
-	double m_double[10][5];
-	void numChange();
 };
