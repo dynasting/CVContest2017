@@ -186,7 +186,15 @@ void CShowDlg::OnBnClickedRecBeginButton()
 	}
 
 	
+	//输出
+	for (int i = 0; i < finalresults.size(); i++) {
+		m_double[i][0] = finalresults[i].shapeComleteID;
+		m_double[i][1] = finalresults[i].centreX;
+		m_double[i][2] = finalresults[i].centreY;
+		m_double[i][3] = finalresults[i].angle;
+		m_double[i][4] = finalresults[i].area;
 
+	}
 	//将使用一些效率较低的方式完成数据输出
 	//或改变相关定义优化
 
