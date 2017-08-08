@@ -185,6 +185,7 @@ void CShowDlg::OnBnClickedRecBeginButton()
 
 	}
 
+	
 
 	//将使用一些效率较低的方式完成数据输出
 	//或改变相关定义优化
