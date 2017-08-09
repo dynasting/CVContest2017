@@ -7,6 +7,7 @@
 #include "MFCtest1Dlg.h"
 #include "afxdialogex.h"
 #include "first_match.h"
+#include "Resource.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
