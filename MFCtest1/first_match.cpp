@@ -1,7 +1,7 @@
-/*
+﻿/*
 http://blog.sina.com.cn/s/blog_58649eb30100th2k.html
 */
-//除了可乐都可以
+//闄や簡鍙箰閮藉彲浠?
 #include <stdio.h>
 #include <iostream>
 #include "opencv2/core/core.hpp"
@@ -82,7 +82,7 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 	dstPoints[0].y = 0;
 	dstPoints[1].y = 0;
 	dstPoints[2].x = 0;
-	//设宽physicalwidth*k,高physicalheight*k，根据面积不变计算出k，随后计算出宽高
+	//璁惧physicalwidth*k,楂榩hysicalheight*k锛屾牴鎹潰绉笉鍙樿绠楀嚭k锛岄殢鍚庤绠楀嚭瀹介珮
 	double k = sqrt(area / (physicalwidth*physicalheight));
 	dstPoints[1].x = physicalwidth*k;
 	dstPoints[2].y = physicalheight*k;
@@ -91,7 +91,7 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 	warpAffine(color, dst, Trans, Size(color.cols, color.rows), CV_INTER_CUBIC);
 
 
-	cv::imwrite("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize.jpg", dst);
+	cv::imwrite("C:\\Users\\楂樺嘲\\Desktop\\姣旇禌鍥惧儚\\娴嬭瘯鍥剧墖\\灏忓浘\\ready_to_recognize.jpg", dst);
 
 
 	afterTrans.physicalLenth = physicalheight;
@@ -106,7 +106,7 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 convert function
 input in ROI result
 output in cm (final answer)
-完整id计算在raw result生成时完成 在此确认
+瀹屾暣id璁＄畻鍦╮aw result鐢熸垚鏃跺畬鎴?鍦ㄦ纭
 */
 finalResult rawresultToFinalResult(rawResult raw, calibrationInfo info) {
 
@@ -144,10 +144,10 @@ static double angle(cv::Point pt1, cv::Point pt2, cv::Point pt0)
 }
 
 /*
-获取颜色
-input RGB空间图像
+鑾峰彇棰滆壊
+input RGB绌洪棿鍥惧儚
 output int colorID
-不改变输入
+涓嶆敼鍙樿緭鍏?
 */
 int getColor(const Mat& input, int x, int y) {
 	
@@ -163,28 +163,28 @@ int getColor(const Mat& input, int x, int y) {
 	int S = hsv.val[1];
 	int V = hsv.val[2];
 
-	//黑色 id 1
+	//榛戣壊 id 1
 	if (V <= 46) return 1;
 
-	//红色 id 2
+	//绾㈣壊 id 2
 	else if (   (H<=10||H>=156)  &&  V>=46  &&  S>=43   )
 	{
 		return 2;
 	}
 	
-	//黄色 id 3
+	//榛勮壊 id 3
 	else if (H >= 26 && H <= 34 && S >= 43 && V >= 46)
 	{
 		return 3;
 	}
 
-	//绿色 id 4
+	//缁胯壊 id 4
 	else if (H >= 35 && H <= 77 && S >= 43 && V >= 46)
 	{
 		return 4;
 	}
 
-	//蓝色 id 5
+	//钃濊壊 id 5
 	else
 	{
 		return 5;
@@ -193,18 +193,18 @@ int getColor(const Mat& input, int x, int y) {
 }
 
 /*
-input 数组指针 rawResult[5]
+input 鏁扮粍鎸囬拡 rawResult[5]
 	  input Mat
-	  照片需要从本地读取
+	  鐓х墖闇€瑕佷粠鏈湴璇诲彇
 	  @@@ ROI set finished
-output 目标个数
+output 鐩爣涓暟
 */
 
 vector <rawResult> recognize(Mat& img_scene){
 	vector <rawResult> result;
 
-	//Mat img_scene = imread("C:\\Users\\姚乐宇\\Desktop\\test3.jpg");
-	//Mat img_scene = imread("D:\\资料\\yly\\myProject\\opencv_test_2.4.11\\test_project_2.4.13.2\\basic-shapes-2.png");
+	//Mat img_scene = imread("C:\\Users\\濮氫箰瀹嘰\Desktop\\test3.jpg");
+	//Mat img_scene = imread("D:\\璧勬枡\\yly\\myProject\\opencv_test_2.4.11\\test_project_2.4.13.2\\basic-shapes-2.png");
 	
 	
 
@@ -227,7 +227,7 @@ vector <rawResult> recognize(Mat& img_scene){
 
 
 
-	//遍历各contours
+	//閬嶅巻鍚刢ontours
 	for (int i = 0; i < contours.size(); i++)
 	{
 		// Approximate contour with accuracy proportional
@@ -240,7 +240,7 @@ vector <rawResult> recognize(Mat& img_scene){
 
 		/*
 
-		不需要三角形
+		涓嶉渶瑕佷笁瑙掑舰
 
 		if (approx.size() == 3)
 		{
@@ -272,8 +272,8 @@ vector <rawResult> recognize(Mat& img_scene){
 
 				//setLabel(dst, "RECT", contours[i]);
 
-				//确认为矩形
-				//下面进行计算
+				//纭涓虹煩褰?
+				//涓嬮潰杩涜璁＄畻
 
 				rawResult singleResult;
 
@@ -290,8 +290,8 @@ vector <rawResult> recognize(Mat& img_scene){
 				singleResult.area = height * width;
 
 
-				//确认长短轴
-				//计算角度取点
+				//纭闀跨煭杞?
+				//璁＄畻瑙掑害鍙栫偣
 				Point p1, p2;
 				double major, minor;
 
@@ -309,15 +309,15 @@ vector <rawResult> recognize(Mat& img_scene){
 					p2 = approx[2];
 				}
 
-				//输出角度
+				//杈撳嚭瑙掑害
 				singleResult.angle=atan2((p1.y-p2.y),(p1.x-p2.x)) * 180 / PI;
 
-				//输出centre
+				//杈撳嚭centre
 				singleResult.centreX = (approx[0].x+ approx[1].x+ approx[2].x+ approx[3].x) / 4;
 				singleResult.centreY = (approx[0].y + approx[1].y + approx[2].y + approx[3].y) / 4;
 
 
-				//形状ID
+				//褰㈢姸ID
 				if (minor / major < 0.85) singleResult.shapeID = 3;
 				else singleResult.shapeID = 2;
 
@@ -333,7 +333,7 @@ vector <rawResult> recognize(Mat& img_scene){
 
 			/*
 			
-			不需要5、6边形
+			涓嶉渶瑕?銆?杈瑰舰
 
 			else if (vtc == 5 && mincos >= -0.34 && maxcos <= -0.27)
 				setLabel(dst, "PENTA", contours[i]);
@@ -354,8 +354,8 @@ vector <rawResult> recognize(Mat& img_scene){
 			if (MAX(box.size.width, box.size.height) > MIN(box.size.width, box.size.height) * 30)
 				continue;
 
-			//确认为椭圆
-			//开始处理
+			//纭涓烘き鍦?
+			//寮€濮嬪鐞?
 			rawResult singleResult;
 
 			double major, minor;
@@ -372,7 +372,7 @@ vector <rawResult> recognize(Mat& img_scene){
 			singleResult.angle = box.angle - (double) 180;
 			singleResult.colorID = getColor(img_scene, singleResult.centreX, singleResult.centreY);
 
-			//形状ID
+			//褰㈢姸ID
 			if (minor / major < 0.85) singleResult.shapeID = 4;
 			else singleResult.shapeID = 1;
 
@@ -381,12 +381,12 @@ vector <rawResult> recognize(Mat& img_scene){
 			singleResult.ifShape = true;
 			//ares
 			singleResult.area =(double)  (box.size.area() * PI / 4);
-		//	待完成
+		//	寰呭畬鎴?
 			//results[numOfTargets].centreX=(int) ((r.br+++)/4)
 
 			/*
 			
-			为识别圆和椭圆进行了修改
+			涓鸿瘑鍒渾鍜屾き鍦嗚繘琛屼簡淇敼
 
 			// Detect and label circles
 			double area = cv::contourArea(contours[i]);
@@ -399,7 +399,7 @@ vector <rawResult> recognize(Mat& img_scene){
 
 
 			*/
-			//更新目标数量
+			//鏇存柊鐩爣鏁伴噺
 			result.push_back(singleResult);
 
 		}
@@ -429,7 +429,7 @@ Mat denoised()
 	}
 	
 	avrg_img.convertTo(avrg_img, CV_8UC3, 255.0);
-	//cv::imwrite("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\denoised.jpg", avrg_img);
+	//cv::imwrite("C:\\Users\\楂樺嘲\\Desktop\\姣旇禌鍥惧儚\\娴嬭瘯鍥剧墖\\灏忓浘\\denoised.jpg", avrg_img);
 	return avrg_img;
 }
 
