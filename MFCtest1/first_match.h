@@ -18,6 +18,7 @@
 //ROI set start point inside the calibration rectangle
 #define OFFSET 5
 #define PI 3.1415
+#define MIN_AREA_OF_TARGET 400
 
 using namespace cv;
 using namespace std;
@@ -136,9 +137,20 @@ input Mat
 @@@ ROI set finished
 output 目标个数
 */
+
+//vector <rawResult> recognize(Mat& img_scene);
+
+/**
+* @num 0=tin 1=noodle 2=gum 3=popcan(hard)
+* @逐一对比
+@objID	 可乐 口香糖 方便面 饼干 81 82 83 84
+* input id roi mat color
+output rawResult
+*/
+rawResult object_recognization_single(int object_num, Mat& img_scene_color);
+
+
 vector <rawResult> recognize(Mat& img_scene);
-
-
 
 /*
 拍照
