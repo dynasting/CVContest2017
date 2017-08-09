@@ -222,7 +222,7 @@ void CMFCtest1Dlg::OnBnClickedCalStopButton()
 	//未经矫正
 	Mat rawImage;
 	rawImage = denoised();
-
+	
 	//即将传递到后续操作的信息（通过全局变量）
 	/*calibrationInfo cali;*/
 

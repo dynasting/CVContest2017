@@ -165,7 +165,7 @@ void CShowDlg::OnBnClickedRecBeginButton()
 
 
 	//用于识别的图像
-	Mat color_denoised = imread("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize.jpg", 1);
+	Mat color_denoised = imread("C:\\Users\\高峰\\Documents\\ready_to_recognize.jpg", 1);
 
 	//ROI set
 	//向内挖去5像素
@@ -189,7 +189,16 @@ void CShowDlg::OnBnClickedRecBeginButton()
 	//将使用一些效率较低的方式完成数据输出
 	//或改变相关定义优化
 
-	m_double[9][4] = 100 ;
+	//输出
+	for (int i = 0; i < finalresults.size(); i++) {
+		m_double[i][0] = finalresults[i].shapeComleteID;
+		m_double[i][1] = finalresults[i].centreX;
+		m_double[i][2] = finalresults[i].centreY;
+		m_double[i][3] = finalresults[i].angle;
+		m_double[i][4] = finalresults[i].area;
+
+	}
+	//m_double[9][4] = 100 ;
 	numChange();
 	UpdateData(FALSE);
 }
