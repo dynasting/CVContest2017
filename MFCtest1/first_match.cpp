@@ -613,6 +613,25 @@ vector<rawResult> recognize(Mat & img_scene)
 	get[1] = object_recognization_single(1, img_scene);
 	get[2] = object_recognization_single(2, img_scene);
 	get[3] = object_recognization_single(3, img_scene);
+	if (get[0].area > MIN_AREA_OF_TARGET) {
+
+	
+		results.push_back(get[0]);
+
+	}
+
+	if (get[1].area > MIN_AREA_OF_TARGET) {
+		results.push_back(get[1]);
+	}
+	if (get[2].area > MIN_AREA_OF_TARGET) {
+		results.push_back(get[2]);
+
+	}
+	if (get[3].area > MIN_AREA_OF_TARGET) {
+		results.push_back(get[3]);
+	}
+	return results;
+
 }
 
 
