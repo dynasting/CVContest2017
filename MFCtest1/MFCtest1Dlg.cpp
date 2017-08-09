@@ -1,4 +1,4 @@
-
+﻿
 // MFCtest1Dlg.cpp : 实现文件
 //
 

@@ -1,7 +1,4 @@
-﻿/*
-http://blog.sina.com.cn/s/blog_58649eb30100th2k.html
-*/
-//闄や簡鍙箰閮藉彲浠?
+﻿
 #include <stdio.h>
 #include <iostream>
 #include "opencv2/core/core.hpp"
