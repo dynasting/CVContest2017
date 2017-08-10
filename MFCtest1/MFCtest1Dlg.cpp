@@ -300,7 +300,29 @@ void CMFCtest1Dlg::OnTimer(UINT_PTR nIDEvent)
 		m_CvvImage.DrawToHDC(hDC, &rect);
 		//cvWaitKey(10);  
 	}
+	CPoint point;
+	GetCursorPos(&point);
+	// HWND hwnd=::GetForegroundWindow();
+	HDC hDC = ::GetDC(NULL);
 
+	// 再获取当前鼠标位置像素值
+	COLORREF color = ::GetPixel(hDC, point.x, point.y);
+	// m_colorState.SetBkColor(color);
+	//int posx, posy, red, green, blue;
+
+	CRect IRect;
+	GetDlgItem(IDC_VIDEO)->GetWindowRect(&IRect);//获取控件相对于屏幕的位置
+	if ((point.x >= IRect.left&&point.x <= IRect.right) && (point.y >= IRect.top&&point.y <= IRect.bottom))
+	{
+		//m_editX = IRect.left;
+		//m_editY = IRect.top;
+		m_editCURX = point.x - IRect.left;
+		m_editCURY = point.y - IRect.top;
+		//m_editRED = GetRValue(color);
+		//m_editGREEN = GetGValue(color);
+		//m_editBLUE = GetBValue(color);
+		UpdateData(FALSE);
+	}
 	CDialogEx::OnTimer(nIDEvent);
 
 }
@@ -310,11 +332,15 @@ void CMFCtest1Dlg::OnBnClickedFinishButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	cvReleaseCapture(&capture);
-	CDC MemDC;
+	/*CDC MemDC;
 	CBitmap m_Bitmap1;
 	m_Bitmap1.LoadBitmap(IDB_BITMAP1);
 	MemDC.CreateCompatibleDC(NULL);
 	MemDC.SelectObject(&m_Bitmap1);
-	pDC->StretchBlt(rect.left, rect.top, rect.Width(), rect.Height(), &MemDC, 0, 0, 48, 48, SRCCOPY);
+	pDC->StretchBlt(rect.left, rect.top, rect.Width(), rect.Height(), &MemDC, 0, 0, 48, 48, SRCCOPY);*/
 
+}
+CMFCtest1Dlg::~CMFCtest1Dlg()
+{
+	cvReleaseCapture(&capture);
 }
