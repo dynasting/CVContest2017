@@ -88,7 +88,7 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 	warpAffine(color, dst, Trans, Size(color.cols, color.rows), CV_INTER_CUBIC);
 
 
-	cv::imwrite("C:\\Users\\楂樺嘲\\Desktop\\姣旇禌鍥惧儚\\娴嬭瘯鍥剧墖\\灏忓浘\\ready_to_recognize.jpg", dst);
+	cv::imwrite("C:\\Users\\高峰\\Documents\\ready_to_recognize.jpg", dst);
 
 
 	afterTrans.physicalLenth = physicalheight;
@@ -411,6 +411,8 @@ Mat denoised()
 	VideoCapture capture(0);
 	int delay = 1000 / 30;
 
+	bool i = capture.isOpened();
+
 	cv::Mat avrg_img;
 
 	for (int i = 0; i < N; i++) {
@@ -420,13 +422,14 @@ Mat denoised()
 		frame.convertTo(frame, CV_32F, 1.0 / 255.0);
 		if (i == 0) {
 			avrg_img = frame / N;
+			imshow("1", avrg_img);
 		}
 		else
 			avrg_img += frame / N;
 	}
 	
 	avrg_img.convertTo(avrg_img, CV_8UC3, 255.0);
-	//cv::imwrite("C:\\Users\\楂樺嘲\\Desktop\\姣旇禌鍥惧儚\\娴嬭瘯鍥剧墖\\灏忓浘\\denoised.jpg", avrg_img);
+	cv::imwrite("C:\\Users\\高峰\\Documents\\denoised.jpg", avrg_img);
 	return avrg_img;
 }
 

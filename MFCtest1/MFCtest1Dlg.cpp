@@ -227,6 +227,8 @@ void CMFCtest1Dlg::OnBnClickedCalStopButton()
 	//未经矫正
 	Mat rawImage;
 	rawImage = denoised();
+	//imshow("22", rawImage);
+	//wirte in denoised is true
 
 	//即将传递到后续操作的信息（通过全局变量）
 	/*calibrationInfo cali;*/
@@ -288,8 +290,11 @@ void CMFCtest1Dlg::OnBnClickedVideoButton()
 }
 
 
+
 void CMFCtest1Dlg::OnTimer(UINT_PTR nIDEvent)
 {
+
+
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	IplImage* m_Frame;
 	m_Frame = cvQueryFrame(capture);
@@ -300,6 +305,7 @@ void CMFCtest1Dlg::OnTimer(UINT_PTR nIDEvent)
 		m_CvvImage.DrawToHDC(hDC, &rect);
 		//cvWaitKey(10);  
 	}
+	
 	CPoint point;
 	GetCursorPos(&point);
 	// HWND hwnd=::GetForegroundWindow();
@@ -330,6 +336,8 @@ void CMFCtest1Dlg::OnTimer(UINT_PTR nIDEvent)
 
 void CMFCtest1Dlg::OnBnClickedFinishButton()
 {
+	
+
 	// TODO: 在此添加控件通知处理程序代码
 	cvReleaseCapture(&capture);
 	/*CDC MemDC;
