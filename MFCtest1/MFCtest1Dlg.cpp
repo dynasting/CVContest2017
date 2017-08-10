@@ -227,7 +227,6 @@ void CMFCtest1Dlg::OnBnClickedCalStopButton()
 	//未经矫正
 	Mat rawImage;
 	rawImage = denoised();
-	//imshow("22", rawImage);
 	//wirte in denoised is true
 
 	//即将传递到后续操作的信息（通过全局变量）
@@ -236,9 +235,9 @@ void CMFCtest1Dlg::OnBnClickedCalStopButton()
 	vector<Point2f> points;
 	points.push_back(Point2f(m_editLUX, m_editLUY));
 	points.push_back(Point2f(m_editRUX, m_editRUY));
-	points.push_back(Point2f(m_editLDX, m_editLDY));
+	
 	points.push_back(Point2f(m_editRDX, m_editRDY));
-
+	points.push_back(Point2f(m_editLDX, m_editLDY));
 
 	//传入的点的顺序应该是，左上，右上，左下，右下
 	cali = AffineTrans(points, m_editWide, m_editLong, rawImage);

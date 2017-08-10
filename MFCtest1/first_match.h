@@ -148,7 +148,7 @@ Mat denoised();
 
 
 extern calibrationInfo cali;
-
+//extern 	vector<Point2f> points;
 #endif // ! FIRST_MATCH_H
 
 #ifndef MIN

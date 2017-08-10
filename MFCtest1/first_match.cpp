@@ -69,6 +69,10 @@ double getDistanceOfTwoCVPoints(Point p1, Point p2) {
 calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, double physicalheight, Mat &color)
 {
 	Mat dst;
+	
+	Mat src = imread("C:\\Users\\高峰\\Documents\\denoised.jpg");
+	//imshow("C:\\Users\\高峰\\Documents\\denoised1111111.jpg", src);
+
 	calibrationInfo afterTrans;
 	double area = 0.5*(scrPoints[0].x*scrPoints[1].y - scrPoints[1].x*scrPoints[0].y
 		+ scrPoints[1].x*scrPoints[2].y - scrPoints[2].x*scrPoints[1].y
@@ -79,13 +83,16 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 	dstPoints[0].y = 0;
 	dstPoints[1].y = 0;
 	dstPoints[2].x = 0;
-	//璁惧physicalwidth*k,楂榩hysicalheight*k锛屾牴鎹潰绉笉鍙樿绠楀嚭k锛岄殢鍚庤绠楀嚭瀹介珮
+
 	double k = sqrt(area / (physicalwidth*physicalheight));
 	dstPoints[1].x = physicalwidth*k;
 	dstPoints[2].y = physicalheight*k;
-	Point2f scrPointsa[4] = { scrPoints[0],scrPoints[1],scrPoints[2],scrPoints[3] };
+	//Point2f scrPointsa[4] = { scrPoints[0],scrPoints[1],scrPoints[2],scrPoints[3] };
+	Point2f scrPointsa[3] = { scrPoints[0],scrPoints[1],scrPoints[3] };
+
 	Mat Trans = getAffineTransform(scrPointsa, dstPoints);
-	warpAffine(color, dst, Trans, Size(color.cols, color.rows), CV_INTER_CUBIC);
+	//warpAffine(color, dst, Trans, Size(color.cols, color.rows), CV_INTER_CUBIC);
+	warpAffine(src, dst, Trans, Size(src.cols, src.rows));
 
 
 	cv::imwrite("C:\\Users\\高峰\\Documents\\ready_to_recognize.jpg", dst);
@@ -411,7 +418,7 @@ Mat denoised()
 	VideoCapture capture(0);
 	int delay = 1000 / 30;
 
-	bool i = capture.isOpened();
+	//bool i = capture.isOpened();
 
 	cv::Mat avrg_img;
 
@@ -422,7 +429,7 @@ Mat denoised()
 		frame.convertTo(frame, CV_32F, 1.0 / 255.0);
 		if (i == 0) {
 			avrg_img = frame / N;
-			imshow("1", avrg_img);
+			//imshow("1", avrg_img);
 		}
 		else
 			avrg_img += frame / N;
@@ -430,6 +437,8 @@ Mat denoised()
 	
 	avrg_img.convertTo(avrg_img, CV_8UC3, 255.0);
 	cv::imwrite("C:\\Users\\高峰\\Documents\\denoised.jpg", avrg_img);
+
+
 	return avrg_img;
 }
 
