@@ -133,6 +133,10 @@ BOOL CMFCtest1Dlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
+	CRect Erect;
+	GetDlgItem(IDC_VIDEO)->GetWindowRect(&Erect); //IDC_WAVE_DRAW为Picture Control的ID  
+	ScreenToClient(&Erect);
+	GetDlgItem(IDC_VIDEO)->MoveWindow(Erect.left, Erect.top, 640, 480, true);
 									// TODO: 在此添加额外的初始化代码
 	pwnd = GetDlgItem(IDC_VIDEO);
 	//pwnd->MoveWindow(35,30,352,288);  
@@ -229,10 +233,10 @@ void CMFCtest1Dlg::OnBnClickedCalStopButton()
 	vector<Point2f> points;
 	points.push_back(Point2f(m_editLUX, m_editLUY));
 	points.push_back(Point2f(m_editRUX, m_editRUY));
-	points.push_back(Point2f(m_editLDX, m_editLDY));
+	
 	points.push_back(Point2f(m_editRDX, m_editRDY));
 
-
+	points.push_back(Point2f(m_editLDX, m_editLDY));
 	//传入的点的顺序应该是，左上，右上，左下，右下
 	cali = AffineTrans(points, m_editWide, m_editLong, rawImage);
 
@@ -294,6 +298,29 @@ void CMFCtest1Dlg::OnTimer(UINT_PTR nIDEvent)
 		m_CvvImage.DrawToHDC(hDC, &rect);
 		//cvWaitKey(10);  
 	}
+	CPoint point;
+	GetCursorPos(&point);
+	// HWND hwnd=::GetForegroundWindow();
+	HDC hDC = ::GetDC(NULL);
+
+	// 再获取当前鼠标位置像素值
+	COLORREF color = ::GetPixel(hDC, point.x, point.y);
+	// m_colorState.SetBkColor(color);
+	//int posx, posy, red, green, blue;
+
+	CRect IRect;
+	GetDlgItem(IDC_VIDEO)->GetWindowRect(&IRect);//获取控件相对于屏幕的位置
+	if ((point.x >= IRect.left&&point.x <= IRect.right) && (point.y >= IRect.top&&point.y <= IRect.bottom))
+	{
+		//m_editX = IRect.left;
+		//m_editY = IRect.top;
+		m_editCURX = point.x - IRect.left;
+		m_editCURY = point.y - IRect.top;
+		//m_editRED = GetRValue(color);
+		//m_editGREEN = GetGValue(color);
+		//m_editBLUE = GetBValue(color);
+		UpdateData(FALSE);
+	}
 
 	CDialogEx::OnTimer(nIDEvent);
 }
@@ -303,11 +330,15 @@ void CMFCtest1Dlg::OnBnClickedFinishButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	cvReleaseCapture(&capture);
-	CDC MemDC;
+	/*CDC MemDC;
 	CBitmap m_Bitmap1;
 	m_Bitmap1.LoadBitmap(IDB_BITMAP1);
 	MemDC.CreateCompatibleDC(NULL);
 	MemDC.SelectObject(&m_Bitmap1);
 	pDC->StretchBlt(rect.left, rect.top, rect.Width(), rect.Height(), &MemDC, 0, 0, 48, 48, SRCCOPY);
-
+*/
+}
+CMFCtest1Dlg::~CMFCtest1Dlg()
+{
+	cvReleaseCapture(&capture);
 }

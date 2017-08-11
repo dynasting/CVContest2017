@@ -46,7 +46,7 @@ public:
 	double m_editRDX;
 	double m_editRDY;
 	afx_msg void OnBnClickedCalStopButton();
-	//~CMFCtest1Dlg();
+	~CMFCtest1Dlg();
 	afx_msg void OnBnClickedVideoButton();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnBnClickedFinishButton();

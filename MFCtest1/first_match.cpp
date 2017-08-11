@@ -12,7 +12,7 @@ http://blog.sina.com.cn/s/blog_58649eb30100th2k.html
 #include <opencv2/opencv.hpp>  
 #include <opencv2/imgproc/imgproc.hpp>
 #include <vector>
-
+#include <opencv2/nonfree/nonfree.hpp>
 
 #include "first_match.h"
 
@@ -86,7 +86,7 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 	double k = sqrt(area / (physicalwidth*physicalheight));
 	dstPoints[1].x = physicalwidth*k;
 	dstPoints[2].y = physicalheight*k;
-	Point2f scrPointsa[4] = { scrPoints[0],scrPoints[1],scrPoints[2],scrPoints[3] };
+	Point2f scrPointsa[3] = { scrPoints[0],scrPoints[1],scrPoints[3] };
 	Mat Trans = getAffineTransform(scrPointsa, dstPoints);
 	warpAffine(color, dst, Trans, Size(color.cols, color.rows), CV_INTER_CUBIC);
 
@@ -446,17 +446,17 @@ output rawResult
 //应使用新代码
 //下次进行修改
 //应设置return 特殊值 以防找不到实物
-rawResult object_recognization_single(int object_num, Mat& img_scene_color)
+rawResult object_recognization_single(int object_num, Mat& image2)
 {
 
 	std::string filename[4] = { "D:\\资料\\yly\\myProject\\opencv_test_2.4.11\\Release\\tin.jpg" ,
 		"D:\\资料\\yly\\myProject\\opencv_test_2.4.11\\Release\\noodles.JPG" ,
 		"D:\\资料\\yly\\myProject\\opencv_test_2.4.11\\Release\\gum.jpg" ,
 		"D:\\资料\\yly\\myProject\\opencv_test_2.4.11\\Release\\popcan.jpg" };
-	Mat img_object = imread(filename[object_num], CV_LOAD_IMAGE_GRAYSCALE);
+	Mat image1 = imread(filename[object_num], 1);
 
-	Mat img_scene;
-	cvtColor(img_scene_color, img_scene, CV_RGB2GRAY);
+	
+	
 	//Mat img_scene = imread("D:\\资料\\yly\\myProject\\opencv_test_2.4.11\\Release\\stuff.jpg", CV_LOAD_IMAGE_GRAYSCALE);
 
 	//int blockSize = 25;
@@ -465,90 +465,118 @@ rawResult object_recognization_single(int object_num, Mat& img_scene_color)
 	//cv::adaptiveThreshold(img_object0, img_object, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, blockSize, constValue);
 	//cv::adaptiveThreshold(img_scene0, img_scene, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, blockSize, constValue);
 
-	//-- Step 1: Detect the keypoints using SURF Detector
-	int minHessian = 350;
+	Ptr<FeatureDetector> detector;
+	Ptr<DescriptorExtractor> extractor;
 
-	SurfFeatureDetector detector(minHessian);
+	initModule_nonfree();
+	/*
+	* SIFT,SURF, ORB
+	*/
+	detector = FeatureDetector::create("SIFT");
+	extractor = DescriptorExtractor::create("SIFT");
 
-	std::vector<KeyPoint> keypoints_object, keypoints_scene;
 
-	detector.detect(img_object, keypoints_object);
-	detector.detect(img_scene, keypoints_scene);
+	vector<KeyPoint> keypoints1, keypoints2;
+	detector->detect(image1, keypoints1);
+	detector->detect(image2, keypoints2);
 
-	//-- Step 2: Calculate descriptors (feature vectors)
-	SurfDescriptorExtractor extractor;
+	cout << "# keypoints of image1 :" << keypoints1.size() << endl;
+	cout << "# keypoints of image2 :" << keypoints2.size() << endl;
 
-	Mat descriptors_object, descriptors_scene;
+	Mat descriptors1, descriptors2;
+	extractor->compute(image1, keypoints1, descriptors1);
+	extractor->compute(image2, keypoints2, descriptors2);
 
-	extractor.compute(img_object, keypoints_object, descriptors_object);
-	extractor.compute(img_scene, keypoints_scene, descriptors_scene);
 
-	//-- Step 3: Matching descriptor vectors using FLANN matcher
-	FlannBasedMatcher matcher;
-	std::vector< DMatch > matches;
-	matcher.match(descriptors_object, descriptors_scene, matches);
 
-	double max_dist = 0; double min_dist = 100;
+	cout << "Descriptors size :" << descriptors1.cols << ":" << descriptors1.rows << endl;
 
-	//-- Quick calculation of max and min distances between keypoints
-	for (int i = 0; i < descriptors_object.rows; i++)
-	{
-		double dist = matches[i].distance;
-		if (dist < min_dist) min_dist = dist;
-		if (dist > max_dist) max_dist = dist;
+	vector< vector<DMatch> > matches12, matches21;
+	Ptr<DescriptorMatcher> matcher = DescriptorMatcher::create("FlannBased");
+	matcher->knnMatch(descriptors1, descriptors2, matches12, 2);
+	matcher->knnMatch(descriptors2, descriptors1, matches21, 2);
+
+	cout << "Matches1-2:" << matches12.size() << endl;
+	cout << "Matches2-1:" << matches21.size() << endl;
+
+	// ratio test proposed by David Lowe paper = 0.8
+	std::vector<DMatch> good_matches1, good_matches2;
+
+	for (int i = 0; i < matches12.size(); i++) {
+		//const float ratio = 0.8;
+		const float ratio = 0.9;
+
+		if (matches12[i][0].distance < ratio * matches12[i][1].distance)
+			good_matches1.push_back(matches12[i][0]);
 	}
 
-	//printf("-- Max dist : %f \n", max_dist);
-	//printf("-- Min dist : %f \n", min_dist);
+	for (int i = 0; i < matches21.size(); i++) {
+		const float ratio = 0.9;
+		//const float ratio = 0.8;
+		if (matches21[i][0].distance < ratio * matches21[i][1].distance)
+			good_matches2.push_back(matches21[i][0]);
+	}
 
-	//-- Draw only "good" matches (i.e. whose distance is less than 3*min_dist )
-	std::vector< DMatch > good_matches;
+	cout << "Good matches1:" << good_matches1.size() << endl;
+	cout << "Good matches2:" << good_matches2.size() << endl;
 
-	for (int i = 0; i < descriptors_object.rows; i++)
-	{
-		if (matches[i].distance < 4 * min_dist)
-		{
-			good_matches.push_back(matches[i]);
+	// Symmetric Test
+	std::vector<DMatch> better_matches;
+	for (int i = 0; i<good_matches1.size(); i++) {
+		for (int j = 0; j<good_matches2.size(); j++) {
+			if (good_matches1[i].queryIdx == good_matches2[j].trainIdx && good_matches2[j].queryIdx == good_matches1[i].trainIdx) {
+				better_matches.push_back(DMatch(good_matches1[i].queryIdx, good_matches1[i].trainIdx, good_matches1[i].distance));
+				break;
+			}
 		}
 	}
 
-	Mat img_matches;
-	drawMatches(img_object, keypoints_object, img_scene, keypoints_scene,
-		good_matches, img_matches, Scalar::all(-1), Scalar::all(-1),
-		vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
+
+	// show it on an image
+	Mat output;
+	drawMatches(image1, keypoints1, image2, keypoints2, better_matches, output);
 
 
+
+
+	//加入定位
 	//-- Localize the object from img_1 in img_2
 	std::vector<Point2f> obj;
 	std::vector<Point2f> scene;
 
-	for (size_t i = 0; i < good_matches.size(); i++)
+	for (size_t i = 0; i < better_matches.size(); i++)
 	{
 		//-- Get the keypoints from the good matches
-		obj.push_back(keypoints_object[good_matches[i].queryIdx].pt);
-		scene.push_back(keypoints_scene[good_matches[i].trainIdx].pt);
+		obj.push_back(keypoints1[better_matches[i].queryIdx].pt);
+		scene.push_back(keypoints2[better_matches[i].trainIdx].pt);
 	}
 
+	//add error handler
+	if (obj.size() < 5) {
+		rawResult res;
+		res.area = 1;
+		return res;
+		//no obj
+	}
 	Mat H = findHomography(obj, scene, CV_RANSAC);
 
 	//-- Get the corners from the image_1 ( the object to be "detected" )
 	std::vector<Point2f> obj_corners(4);
-	obj_corners[0] = Point(0, 0); obj_corners[1] = Point(img_object.cols, 0);
-	obj_corners[2] = Point(img_object.cols, img_object.rows); obj_corners[3] = Point(0, img_object.rows);
+	obj_corners[0] = Point(0, 0); obj_corners[1] = Point(image1.cols, 0);
+	obj_corners[2] = Point(image1.cols, image1.rows); obj_corners[3] = Point(0, image1.rows);
 	std::vector<Point2f> scene_corners(4);
 
 	perspectiveTransform(obj_corners, scene_corners, H);
 
 
 	//-- Draw lines between the corners (the mapped object in the scene - image_2 )
-	//	Point2f offset((float)img_object.cols, 0);
-	//line(img_matches, scene_corners[0] + offset, scene_corners[1] + offset, Scalar(0, 255, 0), 4);
-	//line(img_matches, scene_corners[1] + offset, scene_corners[2] + offset, Scalar(0, 255, 0), 4);
-	//line(img_matches, scene_corners[2] + offset, scene_corners[3] + offset, Scalar(0, 255, 0), 4);
-	//line(img_matches, scene_corners[3] + offset, scene_corners[0] + offset, Scalar(0, 255, 0), 4);
+	Point2f offset((float)image1.cols, 0);
+	line(output, scene_corners[0] + offset, scene_corners[1] + offset, Scalar(0, 255, 0), 4);
+	line(output, scene_corners[1] + offset, scene_corners[2] + offset, Scalar(0, 255, 0), 4);
+	line(output, scene_corners[2] + offset, scene_corners[3] + offset, Scalar(0, 255, 0), 4);
+	line(output, scene_corners[3] + offset, scene_corners[0] + offset, Scalar(0, 255, 0), 4);
 
-	//-- Show detected matches
-	//imshow("Good Matches & Object detection", img_matches);
+
 
 	int area0;
 	area0 = 0.5 * (scene_corners[0].x * scene_corners[1].y
