@@ -136,7 +136,10 @@ BOOL CMFCtest1Dlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
-
+	CRect Erect;
+	GetDlgItem(IDC_VIDEO)->GetWindowRect(&Erect); //IDC_WAVE_DRAW为Picture Control的ID  
+	ScreenToClient(&Erect);
+	GetDlgItem(IDC_VIDEO)->MoveWindow(Erect.left, Erect.top, 640, 480, true);
 									// TODO: 在此添加额外的初始化代码
 	pwnd = GetDlgItem(IDC_VIDEO);
 	//pwnd->MoveWindow(35,30,352,288);  
