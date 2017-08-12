@@ -167,12 +167,16 @@ void CShowDlg::OnBnClickedRecBeginButton()
 	//用于识别的图像
 	Mat color_denoised = imread("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize.jpg", 1);
 
+	Mat imageEnhance;
+	Mat kernel = (Mat_<float>(3, 3) << 0, -1, 0, 0, 5, 0, 0, -1, 0);
+	filter2D(color_denoised, imageEnhance, CV_8UC3, kernel);
+
 	//ROI set
 	//向内挖去5像素
 	//参见first_match.h 中 OFFSET=5
 
 	Rect region_of_interest = Rect(OFFSET, OFFSET, color_denoised.cols-2* OFFSET, color_denoised.rows-2* OFFSET);
-	Mat image_roi = color_denoised(region_of_interest);
+	Mat image_roi = imageEnhance(region_of_interest);
 
 
 	vector <rawResult> rawresults;
@@ -198,7 +202,7 @@ void CShowDlg::OnBnClickedRecBeginButton()
 	//将使用一些效率较低的方式完成数据输出
 	//或改变相关定义优化
 
-	m_double[9][4] = 100 ;
+	
 	numChange();
 	UpdateData(FALSE);
 }
