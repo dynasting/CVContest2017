@@ -1,7 +1,7 @@
-/**
+ï»¿/**
 http://blog.sina.com.cn/s/blog_58649eb30100th2k.html
 */
-//³ýÁË¿ÉÀÖ¶¼¿ÉÒÔ
+//ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½ï¿½
 #include <stdio.h>
 #include <iostream>
 #include "opencv2/core/core.hpp"
@@ -82,7 +82,7 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 	dstPoints[0].y = 0;
 	dstPoints[1].y = 0;
 	dstPoints[2].x = 0;
-	//Éè¿íphysicalwidth*k,¸ßphysicalheight*k£¬¸ù¾ÝÃæ»ý²»±ä¼ÆËã³ök£¬Ëæºó¼ÆËã³ö¿í¸ß
+	//ï¿½ï¿½ï¿½physicalwidth*k,ï¿½ï¿½physicalheight*kï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½kï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	double k = sqrt(area / (physicalwidth*physicalheight));
 	dstPoints[1].x = physicalwidth*k;
 	dstPoints[2].y = physicalheight*k;
@@ -91,7 +91,7 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 	warpAffine(color, dst, Trans, Size(color.cols, color.rows), CV_INTER_CUBIC);
 
 	
-	cv::imwrite("C:\\Users\\¸ß·å\\Desktop\\±ÈÈüÍ¼Ïñ\\²âÊÔÍ¼Æ¬\\Ð¡Í¼\\ready_to_recognize.jpg", dst);
+	cv::imwrite("C:\\Users\\ï¿½ß·ï¿½\\Desktop\\ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½\\ï¿½ï¿½ï¿½ï¿½Í¼Æ¬\\Ð¡Í¼\\ready_to_recognize.jpg", dst);
 
 	afterTrans.physicalLenth = physicalheight;
 	afterTrans.physicalWidth = physicalwidth;
@@ -105,7 +105,7 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 convert function
 input in ROI result
 output in cm (final answer)
-ÍêÕûid¼ÆËãÔÚraw resultÉú³ÉÊ±Íê³É ÔÚ´ËÈ·ÈÏ
+ï¿½ï¿½ï¿½ï¿½idï¿½ï¿½ï¿½ï¿½ï¿½ï¿½raw resultï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ ï¿½Ú´ï¿½È·ï¿½ï¿½
 */
 finalResult rawresultToFinalResult(rawResult raw, calibrationInfo info) {
 
@@ -143,10 +143,10 @@ static double angle(cv::Point pt1, cv::Point pt2, cv::Point pt0)
 }
 
 /*
-»ñÈ¡ÑÕÉ«
-input RGB¿Õ¼äÍ¼Ïñ
+ï¿½ï¿½È¡ï¿½ï¿½É«
+input RGBï¿½Õ¼ï¿½Í¼ï¿½ï¿½
 output int colorID
-²»¸Ä±äÊäÈë
+ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½
 */
 int getColor(const Mat& input, int x, int y) {
 	
@@ -162,28 +162,28 @@ int getColor(const Mat& input, int x, int y) {
 	int S = hsv.val[1];
 	int V = hsv.val[2];
 
-	//ºÚÉ« id 1
+	//ï¿½ï¿½É« id 1
 	if (V <= 46) return 1;
 
-	//ºìÉ« id 2
+	//ï¿½ï¿½É« id 2
 	else if (   (H<=10||H>=156)  &&  V>=46  &&  S>=43   )
 	{
 		return 2;
 	}
 	
-	//»ÆÉ« id 3
+	//ï¿½ï¿½É« id 3
 	else if (H >= 26 && H <= 34 && S >= 43 && V >= 46)
 	{
 		return 3;
 	}
 
-	//ÂÌÉ« id 4
+	//ï¿½ï¿½É« id 4
 	else if (H >= 35 && H <= 77 && S >= 43 && V >= 46)
 	{
 		return 4;
 	}
 
-	//À¶É« id 5
+	//ï¿½ï¿½É« id 5
 	else
 	{
 		return 5;
@@ -192,18 +192,18 @@ int getColor(const Mat& input, int x, int y) {
 }
 
 /*
-input Êý×éÖ¸Õë rawResult[5]
+input ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ rawResult[5]
 	  input Mat
-	  ÕÕÆ¬ÐèÒª´Ó±¾µØ¶ÁÈ¡
+	  ï¿½ï¿½Æ¬ï¿½ï¿½Òªï¿½Ó±ï¿½ï¿½Ø¶ï¿½È¡
 	  @@@ ROI set finished
-output Ä¿±ê¸öÊý
+output Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½
 */
 
 //vector <rawResult> recognize(Mat& img_scene){
 //	vector <rawResult> result;
 //
-//	//Mat img_scene = imread("C:\\Users\\Ò¦ÀÖÓî\\Desktop\\test3.jpg");
-//	//Mat img_scene = imread("D:\\×ÊÁÏ\\yly\\myProject\\opencv_test_2.4.11\\test_project_2.4.13.2\\basic-shapes-2.png");
+//	//Mat img_scene = imread("C:\\Users\\Ò¦ï¿½ï¿½ï¿½ï¿½\\Desktop\\test3.jpg");
+//	//Mat img_scene = imread("D:\\ï¿½ï¿½ï¿½ï¿½\\yly\\myProject\\opencv_test_2.4.11\\test_project_2.4.13.2\\basic-shapes-2.png");
 //	
 //	
 //
@@ -226,7 +226,7 @@ output Ä¿±ê¸öÊý
 //
 //
 //
-//	//±éÀú¸÷contours
+//	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½contours
 //	for (int i = 0; i < contours.size(); i++)
 //	{
 //		// Approximate contour with accuracy proportional
@@ -239,7 +239,7 @@ output Ä¿±ê¸öÊý
 //
 //		/*
 //
-//		²»ÐèÒªÈý½ÇÐÎ
+//		ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //
 //		if (approx.size() == 3)
 //		{
@@ -271,8 +271,8 @@ output Ä¿±ê¸öÊý
 //
 //				//setLabel(dst, "RECT", contours[i]);
 //
-//				//È·ÈÏÎª¾ØÐÎ
-//				//ÏÂÃæ½øÐÐ¼ÆËã
+//				//È·ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
+//				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½
 //
 //				rawResult singleResult;
 //
@@ -289,8 +289,8 @@ output Ä¿±ê¸öÊý
 //				singleResult.area = height * width;
 //
 //
-//				//È·ÈÏ³¤¶ÌÖá
-//				//¼ÆËã½Ç¶ÈÈ¡µã
+//				//È·ï¿½Ï³ï¿½ï¿½ï¿½ï¿½ï¿½
+//				//ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½È¡ï¿½ï¿½
 //				Point p1, p2;
 //				double major, minor;
 //
@@ -308,15 +308,15 @@ output Ä¿±ê¸öÊý
 //					p2 = approx[2];
 //				}
 //
-//				//Êä³ö½Ç¶È
+//				//ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½
 //				singleResult.angle=atan2((p1.y-p2.y),(p1.x-p2.x)) * 180 / PI;
 //
-//				//Êä³öcentre
+//				//ï¿½ï¿½ï¿½centre
 //				singleResult.centreX = (approx[0].x+ approx[1].x+ approx[2].x+ approx[3].x) / 4;
 //				singleResult.centreY = (approx[0].y + approx[1].y + approx[2].y + approx[3].y) / 4;
 //
 //
-//				//ÐÎ×´ID
+//				//ï¿½ï¿½×´ID
 //				if (minor / major < 0.85) singleResult.shapeID = 3;
 //				else singleResult.shapeID = 2;
 //
@@ -332,7 +332,7 @@ output Ä¿±ê¸öÊý
 //
 //			/*
 //			
-//			²»ÐèÒª5¡¢6±ßÐÎ
+//			ï¿½ï¿½ï¿½ï¿½Òª5ï¿½ï¿½6ï¿½ï¿½ï¿½ï¿½
 //
 //			else if (vtc == 5 && mincos >= -0.34 && maxcos <= -0.27)
 //				setLabel(dst, "PENTA", contours[i]);
@@ -353,8 +353,8 @@ output Ä¿±ê¸öÊý
 //			if (MAX(box.size.width, box.size.height) > MIN(box.size.width, box.size.height) * 30)
 //				continue;
 //
-//			//È·ÈÏÎªÍÖÔ²
-//			//¿ªÊ¼´¦Àí
+//			//È·ï¿½ï¿½Îªï¿½ï¿½Ô²
+//			//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
 //			rawResult singleResult;
 //
 //			double major, minor;
@@ -371,7 +371,7 @@ output Ä¿±ê¸öÊý
 //			singleResult.angle = box.angle - (double) 180;
 //			singleResult.colorID = getColor(img_scene, singleResult.centreX, singleResult.centreY);
 //
-//			//ÐÎ×´ID
+//			//ï¿½ï¿½×´ID
 //			if (minor / major < 0.85) singleResult.shapeID = 4;
 //			else singleResult.shapeID = 1;
 //
@@ -380,12 +380,12 @@ output Ä¿±ê¸öÊý
 //			singleResult.ifShape = true;
 //			//ares
 //			singleResult.area =(double)  (box.size.area() * PI / 4);
-//		//	´ýÍê³É
+//		//	ï¿½ï¿½ï¿½ï¿½ï¿½
 //			//results[numOfTargets].centreX=(int) ((r.br+++)/4)
 //
 //			/*
 //			
-//			ÎªÊ¶±ðÔ²ºÍÍÖÔ²½øÐÐÁËÐÞ¸Ä
+//			ÎªÊ¶ï¿½ï¿½Ô²ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½
 //
 //			// Detect and label circles
 //			double area = cv::contourArea(contours[i]);
@@ -398,7 +398,7 @@ output Ä¿±ê¸öÊý
 //
 //
 //			*/
-//			//¸üÐÂÄ¿±êÊýÁ¿
+//			//ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //			result.push_back(singleResult);
 //
 //		}
@@ -428,7 +428,7 @@ Mat denoised()
 	}
 	
 	avrg_img.convertTo(avrg_img, CV_8UC3, 255.0);
-	//cv::imwrite("C:\\Users\\¸ß·å\\Desktop\\±ÈÈüÍ¼Ïñ\\²âÊÔÍ¼Æ¬\\Ð¡Í¼\\denoised.jpg", avrg_img);
+	//cv::imwrite("C:\\Users\\ï¿½ß·ï¿½\\Desktop\\ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½\\ï¿½ï¿½ï¿½ï¿½Í¼Æ¬\\Ð¡Í¼\\denoised.jpg", avrg_img);
 	return avrg_img;
 }
 
@@ -437,27 +437,27 @@ calibrationInfo cali;
 
 /**
 * @num 0=tin 1=noodle 2=gum 3=popcan(hard)
-* @ÖðÒ»¶Ô±È
-@objID	 ¿ÉÀÖ ¿ÚÏãÌÇ ·½±ãÃæ ±ý¸É 81 82 83 84
+* @ï¿½ï¿½Ò»ï¿½Ô±ï¿½
+@objID	 ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 81 82 83 84
 * input id roi mat color
 output rawResult
 */
 
-//Ó¦Ê¹ÓÃÐÂ´úÂë
-//ÏÂ´Î½øÐÐÐÞ¸Ä
-//Ó¦ÉèÖÃreturn ÌØÊâÖµ ÒÔ·ÀÕÒ²»µ½ÊµÎï
+//Ó¦Ê¹ï¿½ï¿½ï¿½Â´ï¿½ï¿½ï¿½
+//ï¿½Â´Î½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½
+//Ó¦ï¿½ï¿½ï¿½ï¿½return ï¿½ï¿½ï¿½ï¿½Öµ ï¿½Ô·ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Êµï¿½ï¿½
 rawResult object_recognization_single(int object_num, Mat& image2)
 {
 
-	std::string filename[4] = { "D:\\×ÊÁÏ\\yly\\myProject\\opencv_test_2.4.11\\Release\\tin.jpg" ,
-		"D:\\×ÊÁÏ\\yly\\myProject\\opencv_test_2.4.11\\Release\\noodles.JPG" ,
-		"D:\\×ÊÁÏ\\yly\\myProject\\opencv_test_2.4.11\\Release\\gum.jpg" ,
-		"D:\\×ÊÁÏ\\yly\\myProject\\opencv_test_2.4.11\\Release\\popcan.jpg" };
+	std::string filename[4] = { "D:\\ï¿½ï¿½ï¿½ï¿½\\yly\\myProject\\opencv_test_2.4.11\\Release\\tin.jpg" ,
+		"D:\\ï¿½ï¿½ï¿½ï¿½\\yly\\myProject\\opencv_test_2.4.11\\Release\\noodles.JPG" ,
+		"D:\\ï¿½ï¿½ï¿½ï¿½\\yly\\myProject\\opencv_test_2.4.11\\Release\\gum.jpg" ,
+		"D:\\ï¿½ï¿½ï¿½ï¿½\\yly\\myProject\\opencv_test_2.4.11\\Release\\popcan.jpg" };
 	Mat image1 = imread(filename[object_num], 1);
 
 	
 	
-	//Mat img_scene = imread("D:\\×ÊÁÏ\\yly\\myProject\\opencv_test_2.4.11\\Release\\stuff.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+	//Mat img_scene = imread("D:\\ï¿½ï¿½ï¿½ï¿½\\yly\\myProject\\opencv_test_2.4.11\\Release\\stuff.jpg", CV_LOAD_IMAGE_GRAYSCALE);
 
 	//int blockSize = 25;
 	//int constValue = 10;
@@ -539,7 +539,7 @@ rawResult object_recognization_single(int object_num, Mat& image2)
 
 
 
-	//¼ÓÈë¶¨Î»
+	//ï¿½ï¿½ï¿½ë¶¨Î»
 	//-- Localize the object from img_1 in img_2
 	std::vector<Point2f> obj;
 	std::vector<Point2f> scene;
