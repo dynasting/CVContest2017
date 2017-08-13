@@ -69,34 +69,35 @@ double getDistanceOfTwoCVPoints(Point p1, Point p2) {
 calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, double physicalheight, Mat &color)
 {
 	Mat dst;
-	
-	Mat src = imread("C:\\Users\\高峰\\Documents\\denoised.jpg");
-	//imshow("C:\\Users\\高峰\\Documents\\denoised1111111.jpg", src);
-
 	calibrationInfo afterTrans;
 	double area = 0.5*(scrPoints[0].x*scrPoints[1].y - scrPoints[1].x*scrPoints[0].y
 		+ scrPoints[1].x*scrPoints[2].y - scrPoints[2].x*scrPoints[1].y
 		+ scrPoints[2].x*scrPoints[3].y - scrPoints[3].x*scrPoints[2].y
 		+ scrPoints[3].x*scrPoints[0].y - scrPoints[0].x*scrPoints[3].y);
-	Point2f dstPoints[3];
+	Point2f dstPoints[4];
 	dstPoints[0].x = 0;
 	dstPoints[0].y = 0;
-	dstPoints[1].y = 0;
-	dstPoints[2].x = 0;
-
+	dstPoints[2].y = 0;
+	dstPoints[1].x = 0;
 	double k = sqrt(area / (physicalwidth*physicalheight));
-	dstPoints[1].x = physicalwidth*k;
-	dstPoints[2].y = physicalheight*k;
-	//Point2f scrPointsa[4] = { scrPoints[0],scrPoints[1],scrPoints[2],scrPoints[3] };
-	Point2f scrPointsa[3] = { scrPoints[0],scrPoints[1],scrPoints[3] };
+	k = k / 4;
 
-	Mat Trans = getAffineTransform(scrPointsa, dstPoints);
+	/*dstPoints[2].x = (int) (physicalwidth*k);
+	dstPoints[1].y =(int) (physicalheight*k);
+	dstPoints[3].x= (int) (physicalwidth*k);
+	dstPoints[3].y= (int) (physicalheight*k);*/
+	dstPoints[2].x = (int)480;
+	dstPoints[1].y = (int)480;
+	dstPoints[3].x = (int)480;
+	dstPoints[3].y = (int)480;
+	Point2f scrPointsa[4] = { scrPoints[0],scrPoints[3],scrPoints[1],scrPoints[2] };
+	//Mat Trans = getAffineTransform(scrPointsa, dstPoints);
+	Mat Trans = getPerspectiveTransform(scrPointsa, dstPoints);
+	warpPerspective(color, dst, Trans, Size(color.cols, color.rows));
 	//warpAffine(color, dst, Trans, Size(color.cols, color.rows), CV_INTER_CUBIC);
-	warpAffine(src, dst, Trans, Size(src.cols, src.rows));
 
 
 	cv::imwrite("C:\\Users\\高峰\\Documents\\ready_to_recognize.jpg", dst);
-
 
 	afterTrans.physicalLenth = physicalheight;
 	afterTrans.physicalWidth = physicalwidth;
@@ -116,19 +117,19 @@ finalResult rawresultToFinalResult(rawResult raw, calibrationInfo info) {
 
 	//coefficient
 	double coefficient;
-	coefficient = info.lenth * info.width / (info.physicalLenth * info.physicalWidth);
+	coefficient = 480 / info.physicalLenth;
 
 	finalResult result;
-	result.angle = (int) raw.angle;
+	result.angle = (int)raw.angle;
 	result.ifShape = raw.ifShape;
 	result.colorID = raw.colorID;
 	result.shapeID = raw.shapeID;
 	//shapeCompleteID = 10*colorID + shapeID
-	result.shapeComleteID = raw.colorID * 10 +raw.shapeID;
+	result.shapeComleteID = raw.colorID * 10 + raw.shapeID;
 	result.objID = raw.objID;
-	result.area = (int) (raw.area / coefficient);
-	result.centreX = (int) ((raw.centreX + OFFSET) / (sqrt(coefficient)));
-	result.centreY = (int) ((raw.centreY + OFFSET) / (sqrt(coefficient)));
+	result.area = (int)(raw.area / coefficient / coefficient);
+	result.centreX = (int)((raw.centreX + OFFSET) / (coefficient));
+	result.centreY = (int)((raw.centreY + OFFSET) / (coefficient));
 	return result;
 }
 
