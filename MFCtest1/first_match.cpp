@@ -88,7 +88,7 @@ calibrationInfo AffineTrans(vector<Point2f> scrPoints, double physicalwidth, dou
 	warpAffine(color, dst, Trans, Size(color.cols, color.rows), CV_INTER_CUBIC);
 
 	
-	cv::imwrite("C:\\Users\\�߷�\\Desktop\\����ͼ��\\����ͼƬ\\Сͼ\\ready_to_recognize.jpg", dst);
+	cv::imwrite("C:\\ready_to_recognize.jpg", dst);
 
 	afterTrans.physicalLenth = physicalheight;
 	afterTrans.physicalWidth = physicalwidth;
@@ -188,221 +188,7 @@ int getColor(const Mat& input, int x, int y) {
 
 }
 
-/*
-input ����ָ�� rawResult[5]
-	  input Mat
-	  ��Ƭ��Ҫ�ӱ��ض�ȡ
-	  @@@ ROI set finished
-output Ŀ�����
-*/
 
-//vector <rawResult> recognize(Mat& img_scene){
-//	vector <rawResult> result;
-//
-//	//Mat img_scene = imread("C:\\Users\\Ҧ����\\Desktop\\test3.jpg");
-//	//Mat img_scene = imread("D:\\����\\yly\\myProject\\opencv_test_2.4.11\\test_project_2.4.13.2\\basic-shapes-2.png");
-//	
-//	
-//
-//
-//
-//	// Convert to grayscale
-//	cv::Mat gray;
-//	cv::cvtColor(img_scene, gray, CV_BGR2GRAY);
-//
-//	// Use Canny instead of threshold to catch squares with gradient shading
-//	cv::Mat bw;
-//	cv::Canny(gray, bw, 0, 50, 5);
-//
-//	// Find contours
-//	std::vector<std::vector<cv::Point> > contours;
-//	cv::findContours(bw.clone(), contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
-//
-//	std::vector<cv::Point> approx;
-//	cv::Mat dst = img_scene.clone();
-//
-//
-//
-//	//������contours
-//	for (int i = 0; i < contours.size(); i++)
-//	{
-//		// Approximate contour with accuracy proportional
-//		// to the contour perimeter
-//		cv::approxPolyDP(cv::Mat(contours[i]), approx, cv::arcLength(cv::Mat(contours[i]), true)*0.02, true);
-//
-//		// Skip small or non-convex objects 
-//		if (std::fabs(cv::contourArea(contours[i])) < 100 || !cv::isContourConvex(approx))
-//			continue;
-//
-//		/*
-//
-//		����Ҫ������
-//
-//		if (approx.size() == 3)
-//		{
-//			setLabel(dst, "TRI", contours[i]);    // Triangles
-//		}
-//		*/
-//
-//		//if (approx.size() >= 4 && approx.size() <= 6)
-//		if (approx.size() == 4)
-//		{
-//			// Number of vertices of polygonal curve
-//			int vtc = approx.size();
-//
-//			// Get the cosines of all corners
-//			std::vector<double> cos;
-//			for (int j = 2; j < vtc + 1; j++)
-//				cos.push_back(angle(approx[j%vtc], approx[j - 2], approx[j - 1]));
-//
-//			// Sort ascending the cosine values
-//			std::sort(cos.begin(), cos.end());
-//
-//			// Get the lowest and the highest cosine
-//			double mincos = cos.front();
-//			double maxcos = cos.back();
-//
-//			// Use the degrees obtained above and the number of vertices
-//			// to determine the shape of the contour
-//			if (vtc == 4 && mincos >= -0.1 && maxcos <= 0.3) {
-//
-//				//setLabel(dst, "RECT", contours[i]);
-//
-//				//ȷ��Ϊ����
-//				//������м���
-//
-//				rawResult singleResult;
-//
-//				double height, width;
-//				double L1, L2, L3, L0;
-//				L0 = getDistanceOfTwoCVPoints(approx[0], approx[1]);
-//				L1 = getDistanceOfTwoCVPoints(approx[1], approx[2]);
-//				L2 = getDistanceOfTwoCVPoints(approx[2], approx[3]);
-//				L3 = getDistanceOfTwoCVPoints(approx[3], approx[0]);
-//
-//				height = sqrt(L0 * L2);
-//				width = sqrt(L1 * L3);
-//
-//				singleResult.area = height * width;
-//
-//
-//				//ȷ�ϳ�����
-//				//����Ƕ�ȡ��
-//				Point p1, p2;
-//				double major, minor;
-//
-//				if (width >= height) {
-//					major = width;
-//					minor = height;
-//					p1 = approx[0];
-//					p2 = approx[1];
-//				}
-//				else
-//				{
-//					major = height;
-//					minor = width;
-//					p1 = approx[1];
-//					p2 = approx[2];
-//				}
-//
-//				//����Ƕ�
-//				singleResult.angle=atan2((p1.y-p2.y),(p1.x-p2.x)) * 180 / PI;
-//
-//				//���centre
-//				singleResult.centreX = (approx[0].x+ approx[1].x+ approx[2].x+ approx[3].x) / 4;
-//				singleResult.centreY = (approx[0].y + approx[1].y + approx[2].y + approx[3].y) / 4;
-//
-//
-//				//��״ID
-//				if (minor / major < 0.85) singleResult.shapeID = 3;
-//				else singleResult.shapeID = 2;
-//
-//				singleResult.ifShape = true;
-//
-//				singleResult.colorID = getColor(img_scene, singleResult.centreX, singleResult.centreY);
-//
-//				singleResult.shapeComleteID = 10 * singleResult.colorID + singleResult.shapeID;
-//
-//				result.push_back(singleResult);
-//
-//			}
-//
-//			/*
-//			
-//			����Ҫ5��6����
-//
-//			else if (vtc == 5 && mincos >= -0.34 && maxcos <= -0.27)
-//				setLabel(dst, "PENTA", contours[i]);
-//			else if (vtc == 6 && mincos >= -0.55 && maxcos <= -0.45)
-//				setLabel(dst, "HEXA", contours[i]);
-//
-//			*/
-//		}
-//		else if(approx.size() >= 7)
-//		{
-//			
-//			Mat pointsf;
-//			Mat(contours[i]).convertTo(pointsf, CV_32F);
-//			RotatedRect box = fitEllipse(pointsf);
-//
-//			//cv::Rect r = cv::boundingRect(contours[i]);
-//
-//			if (MAX(box.size.width, box.size.height) > MIN(box.size.width, box.size.height) * 30)
-//				continue;
-//
-//			//ȷ��Ϊ��Բ
-//			//��ʼ����
-//			rawResult singleResult;
-//
-//			double major, minor;
-//			major = MAX(box.size.width, box.size.height);
-//			minor = MIN(box.size.width, box.size.height);
-//
-//
-//			//centre
-//			singleResult.centreX = box.center.x;
-//			singleResult.centreY = box.center.y;
-//
-//
-//			//angle 
-//			singleResult.angle = box.angle - (double) 180;
-//			singleResult.colorID = getColor(img_scene, singleResult.centreX, singleResult.centreY);
-//
-//			//��״ID
-//			if (minor / major < 0.85) singleResult.shapeID = 4;
-//			else singleResult.shapeID = 1;
-//
-//			singleResult.shapeComleteID = 10 * singleResult.colorID + singleResult.shapeID;
-//
-//			singleResult.ifShape = true;
-//			//ares
-//			singleResult.area =(double)  (box.size.area() * PI / 4);
-//		//	�����
-//			//results[numOfTargets].centreX=(int) ((r.br+++)/4)
-//
-//			/*
-//			
-//			Ϊʶ��Բ����Բ�������޸�
-//
-//			// Detect and label circles
-//			double area = cv::contourArea(contours[i]);
-//			cv::Rect r = cv::boundingRect(contours[i]);
-//			int radius = r.width / 2;
-//
-//			if (std::abs(1 - ((double)r.width / r.height)) <= 0.2 &&
-//				std::abs(1 - (area / (CV_PI * std::pow(radius, 2)))) <= 0.2)
-//				setLabel(dst, "CIR", contours[i]);
-//
-//
-//			*/
-//			//����Ŀ������
-//			result.push_back(singleResult);
-//
-//		}
-//	}
-//
-//	return result;
-//}
 
 Mat denoised()
 {
@@ -454,13 +240,6 @@ rawResult object_recognization_single(int object_num, Mat& image2)
 
 	
 	
-	//Mat img_scene = imread("D:\\����\\yly\\myProject\\opencv_test_2.4.11\\Release\\stuff.jpg", CV_LOAD_IMAGE_GRAYSCALE);
-
-	//int blockSize = 25;
-	//int constValue = 10;
-	//cv::Mat local;
-	//cv::adaptiveThreshold(img_object0, img_object, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, blockSize, constValue);
-	//cv::adaptiveThreshold(img_scene0, img_scene, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, blockSize, constValue);
 
 	Ptr<FeatureDetector> detector;
 	Ptr<DescriptorExtractor> extractor;
@@ -529,9 +308,7 @@ rawResult object_recognization_single(int object_num, Mat& image2)
 	}
 
 
-	// show it on an image
-	Mat output;
-	drawMatches(image1, keypoints1, image2, keypoints2, better_matches, output);
+
 
 
 
@@ -566,12 +343,7 @@ rawResult object_recognization_single(int object_num, Mat& image2)
 	perspectiveTransform(obj_corners, scene_corners, H);
 
 
-	//-- Draw lines between the corners (the mapped object in the scene - image_2 )
-	Point2f offset((float)image1.cols, 0);
-	line(output, scene_corners[0] + offset, scene_corners[1] + offset, Scalar(0, 255, 0), 4);
-	line(output, scene_corners[1] + offset, scene_corners[2] + offset, Scalar(0, 255, 0), 4);
-	line(output, scene_corners[2] + offset, scene_corners[3] + offset, Scalar(0, 255, 0), 4);
-	line(output, scene_corners[3] + offset, scene_corners[0] + offset, Scalar(0, 255, 0), 4);
+
 
 
 
@@ -630,7 +402,7 @@ rawResult object_recognization_single(int object_num, Mat& image2)
 
 }
 
-vector<rawResult> recognize(Mat & img_scene)
+vector<rawResult> recognizeObj(Mat & img_scene)
 {
 	vector<rawResult> results;
 	rawResult get[4];
@@ -659,6 +431,180 @@ vector<rawResult> recognize(Mat & img_scene)
 
 }
 
+bool check_validation(rawResult shape, rawResult obj) {
+	double dst;
+	dst = getDistanceOfPoints(shape.centreX, shape.centreY, obj.centreX, obj.centreY);
+	if (dst < sqrt(obj.area)) return false;
+	else return true;
+}
+
+
+double getDistanceOfPoints(double x1, double y1, double x2, double y2) {
+	double dist;
+	dist = sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
+	return dist;
+}
 
 
 
+vector <rawResult> recognizeShape(Mat& img_scene) {
+	vector <rawResult> result;
+
+	
+	// Convert to grayscale
+	cv::Mat gray;
+	cv::cvtColor(img_scene, gray, CV_BGR2GRAY);
+
+	// Use Canny instead of threshold to catch squares with gradient shading
+	cv::Mat bw;
+	cv::Canny(gray, bw, 0, 50, 5);
+
+	// Find contours
+	std::vector<std::vector<cv::Point> > contours;
+	cv::findContours(bw.clone(), contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+
+	std::vector<cv::Point> approx;
+	cv::Mat dst = img_scene.clone();
+
+
+
+	
+	for (int i = 0; i < contours.size(); i++)
+	{
+		// Approximate contour with accuracy proportional
+		// to the contour perimeter
+		cv::approxPolyDP(cv::Mat(contours[i]), approx, cv::arcLength(cv::Mat(contours[i]), true)*0.02, true);
+
+		// Skip small or non-convex objects 
+		if (std::fabs(cv::contourArea(contours[i])) < 100 || !cv::isContourConvex(approx))
+			continue;
+
+
+		//if (approx.size() >= 4 && approx.size() <= 6)
+		if (approx.size() == 4)
+		{
+			// Number of vertices of polygonal curve
+			int vtc = approx.size();
+
+			// Get the cosines of all corners
+			std::vector<double> cos;
+			for (int j = 2; j < vtc + 1; j++)
+				cos.push_back(angle(approx[j%vtc], approx[j - 2], approx[j - 1]));
+
+			// Sort ascending the cosine values
+			std::sort(cos.begin(), cos.end());
+
+			// Get the lowest and the highest cosine
+			double mincos = cos.front();
+			double maxcos = cos.back();
+
+			// Use the degrees obtained above and the number of vertices
+			// to determine the shape of the contour
+			if (vtc == 4 && mincos >= -0.1 && maxcos <= 0.3) {
+
+				//setLabel(dst, "RECT", contours[i]);
+
+
+				rawResult singleResult;
+
+				double height, width;
+				double L1, L2, L3, L0;
+				L0 = getDistanceOfTwoCVPoints(approx[0], approx[1]);
+				L1 = getDistanceOfTwoCVPoints(approx[1], approx[2]);
+				L2 = getDistanceOfTwoCVPoints(approx[2], approx[3]);
+				L3 = getDistanceOfTwoCVPoints(approx[3], approx[0]);
+
+				height = sqrt(L0 * L2);
+				width = sqrt(L1 * L3);
+
+				singleResult.area = height * width;
+
+
+				
+				Point p1, p2;
+				double major, minor;
+
+				if (width >= height) {
+					major = width;
+					minor = height;
+					p1 = approx[0];
+					p2 = approx[1];
+				}
+				else
+				{
+					major = height;
+					minor = width;
+					p1 = approx[1];
+					p2 = approx[2];
+				}
+
+			
+				singleResult.angle = atan2((p1.y - p2.y), (p1.x - p2.x)) * 180 / PI;
+
+				
+				singleResult.centreX = (approx[0].x + approx[1].x + approx[2].x + approx[3].x) / 4;
+				singleResult.centreY = (approx[0].y + approx[1].y + approx[2].y + approx[3].y) / 4;
+
+
+				
+				if (minor / major < 0.85) singleResult.shapeID = 3;
+				else singleResult.shapeID = 2;
+
+				singleResult.ifShape = true;
+
+				singleResult.colorID = getColor(img_scene, singleResult.centreX, singleResult.centreY);
+
+				singleResult.shapeComleteID = 10 * singleResult.colorID + singleResult.shapeID;
+
+				result.push_back(singleResult);
+
+			}
+
+			
+		}
+		else if (approx.size() >= 7)
+		{
+
+			Mat pointsf;
+			Mat(contours[i]).convertTo(pointsf, CV_32F);
+			RotatedRect box = fitEllipse(pointsf);
+
+			//cv::Rect r = cv::boundingRect(contours[i]);
+
+			if (MAX(box.size.width, box.size.height) > MIN(box.size.width, box.size.height) * 30)
+				continue;
+
+			
+			rawResult singleResult;
+
+			double major, minor;
+			major = MAX(box.size.width, box.size.height);
+			minor = MIN(box.size.width, box.size.height);
+
+
+			//centre
+			singleResult.centreX = box.center.x;
+			singleResult.centreY = box.center.y;
+
+
+			//angle 
+			singleResult.angle = box.angle - (double)180;
+			singleResult.colorID = getColor(img_scene, singleResult.centreX, singleResult.centreY);
+
+			
+			if (minor / major < 0.85) singleResult.shapeID = 4;
+			else singleResult.shapeID = 1;
+
+			singleResult.shapeComleteID = 10 * singleResult.colorID + singleResult.shapeID;
+
+			singleResult.ifShape = true;
+			//ares
+			singleResult.area = (double)(box.size.area() * PI / 4);
+			
+			result.push_back(singleResult);
+
+		}
+	}
+
+	return result;
+}

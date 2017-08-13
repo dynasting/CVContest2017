@@ -158,14 +158,10 @@ void CShowDlg::OnBnClickedRecBeginButton()
 	//标定数据需要传过来
 	//这些数据是为了通过编译用的 应来源于标定
 	/*calibrationInfo cali;*/
-	cali.lenth = 400;
-	cali.width = 400;
-	cali.physicalLenth = 72;
-	cali.physicalWidth = 72;
-
+	
 
 	//用于识别的图像
-	Mat color_denoised = imread("C:\\Users\\高峰\\Desktop\\比赛图像\\测试图片\\小图\\ready_to_recognize.jpg", 1);
+	Mat color_denoised = imread("C:\\ready_to_recognize.jpg", 1);
 
 	Mat imageEnhance;
 	Mat kernel = (Mat_<float>(3, 3) << 0, -1, 0, 0, 5, 0, 0, -1, 0);
@@ -179,13 +175,49 @@ void CShowDlg::OnBnClickedRecBeginButton()
 	Mat image_roi = imageEnhance(region_of_interest);
 
 
-	vector <rawResult> rawresults;
-	rawresults = recognize(image_roi);
+	/*vector <rawResult> rawresults;*/
+
+
+	vector <rawResult> objResults;
+	objResults = recognizeObj(image_roi);
+
+
+	vector <rawResult> shapeResults;
+	shapeResults = recognizeShape(image_roi);
+
+
+
+
+	vector <rawResult> rawResults;
+
+	for (size_t i = 0; i < shapeResults.size(); i++) {
+		bool check = true;
+		for (size_t j = 0; j < objResults.size(); j++) {
+			check = check && check_validation(shapeResults[i], objResults[j]);
+
+		}
+		if (check) {
+			rawResults.push_back(shapeResults[i]);
+
+		}
+	}
+
+	for (size_t j = 0; j < objResults.size(); j++) {
+		rawResults.push_back(objResults[j]);
+
+	}
+
+
+
+
+
+
+
 
 	//完成识别  进行比例运算
 	vector <finalResult> finalresults;
-	for (size_t i = 0; i < rawresults.size(); i++) {
-		finalresults.push_back(rawresultToFinalResult(rawresults[i], cali));
+	for (size_t i = 0; i < rawResults.size(); i++) {
+		finalresults.push_back(rawresultToFinalResult(rawResults[i], cali));
 
 	}
 

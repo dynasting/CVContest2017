@@ -150,13 +150,26 @@ output rawResult
 rawResult object_recognization_single(int object_num, Mat& img_scene_color);
 
 
-vector <rawResult> recognize(Mat& img_scene);
+vector <rawResult> recognizeObj(Mat& img_scene);
+
+
+vector <rawResult> recognizeShape(Mat& img_scene);
+
+bool check_validation(rawResult shape, rawResult obj);
+
+
+double getDistanceOfPoints(double x1, double y1, double x2, double y2);
+
 
 /*
 拍照
 降噪
 */
 Mat denoised();
+
+
+
+
 
 extern calibrationInfo cali;
 #endif // ! FIRST_MATCH_H
