@@ -161,7 +161,7 @@ void CShowDlg::OnBnClickedRecBeginButton()
 	
 
 	//用于识别的图像
-	Mat color_denoised = imread("C:\\ready_to_recognize.jpg", 1);
+	Mat color_denoised = imread("C:\\Users\\高峰\\Documents\\ready_to_recognize.jpg", 1);
 
 	Mat imageEnhance;
 	Mat kernel = (Mat_<float>(3, 3) << 0, -1, 0, 0, 5, 0, 0, -1, 0);
@@ -224,11 +224,17 @@ void CShowDlg::OnBnClickedRecBeginButton()
 	
 	//输出
 	for (int i = 0; i < finalresults.size(); i++) {
-		m_double[i][0] = finalresults[i].shapeComleteID;
+		//m_double[i][0] = finalresults[i].shapeComleteID;
 		m_double[i][1] = finalresults[i].centreX;
 		m_double[i][2] = finalresults[i].centreY;
 		m_double[i][3] = finalresults[i].angle;
 		m_double[i][4] = finalresults[i].area;
+		if (finalresults[i].ifShape) {
+			m_double[i][0] = finalresults[i].shapeComleteID;
+
+		}
+		else 
+			m_double[i][0] = finalresults[i].objID;
 
 	}
 	//将使用一些效率较低的方式完成数据输出

@@ -312,6 +312,7 @@ void CMFCtest1Dlg::OnTimer(UINT_PTR nIDEvent)
 	GetDlgItem(IDC_VIDEO)->GetWindowRect(&IRect);//获取控件相对于屏幕的位置
 	if ((point.x >= IRect.left&&point.x <= IRect.right) && (point.y >= IRect.top&&point.y <= IRect.bottom))
 	{
+		UpdateData(TRUE);
 		//m_editX = IRect.left;
 		//m_editY = IRect.top;
 		m_editCURX = point.x - IRect.left;
