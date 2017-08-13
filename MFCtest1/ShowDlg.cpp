@@ -192,7 +192,7 @@ void CShowDlg::OnBnClickedRecBeginButton()
 	
 	//输出
 	for (int i = 0; i < finalresults.size(); i++) {
-		m_double[i][0] = finalresults[i].shapeComleteID;
+		m_double[i][0] = finalresults[i].objID;
 		m_double[i][1] = finalresults[i].centreX;
 		m_double[i][2] = finalresults[i].centreY;
 		m_double[i][3] = finalresults[i].angle;
